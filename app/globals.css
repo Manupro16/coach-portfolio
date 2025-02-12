@@ -8,3 +8,7 @@
         border-b border-gray-700
         shadow-lg
 }
+
+.website-background {
+    @apply   bg-gradient-to-r from-black via-primaryDark to-black z-0
+}

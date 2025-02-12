@@ -3,8 +3,11 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
-import Navbar from "@/app/components/NavBar";
+import Navbar from "@/app/components/ClientNavbar";
 import Footer from "@/app/components/Footer";
+import React from "react";
+
+
 
 const geistSans = Geist({
     variable: "--font-geist-sans",

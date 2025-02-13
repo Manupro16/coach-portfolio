@@ -26,7 +26,7 @@ const SkeletonNavbar: React.FC = () => {
 
                 <Flex gap="2">
                     {/* Desktop Version: Shown on md and above */}
-                    <div className="hidden md:flex">
+                    <div className="hidden md:flex gap-6">
                         {Array.from({ length: 8 }).map((_, index) => (
                             <Box key={index} className="w-16 h-6 bg-gray-600 rounded" />
                         ))}

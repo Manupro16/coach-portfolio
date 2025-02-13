@@ -1,6 +1,11 @@
 import React from 'react';
 import {Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
-import {InstagramLogoIcon, TwitterLogoIcon, FontFamilyIcon, EnvelopeClosedIcon} from "@radix-ui/react-icons";
+import {
+    InstagramLogoIcon,
+    TwitterLogoIcon,
+    EnvelopeClosedIcon,
+    LinkedInLogoIcon
+} from "@radix-ui/react-icons";
 
 
 const Footer: React.FC = () => {
@@ -16,24 +21,42 @@ const Footer: React.FC = () => {
                     <Text size="4" className="text-textMuted">
                         Professional Football Coach
                     </Text>
-                    <Text size="3" className="text-gray-500">
+                    <Text size="3" className="text-gray-400 text-center md:text-left">
                         © 2024 Chuy Vera. All rights reserved.
                     </Text>
                 </Flex>
-                 {/* Social Media Links */}
+                {/* Social Media Links */}
                 <Flex as="div" direction="column" gap="2" align="center">
                     <Heading size="6" className="text-primary">
                         Social Media
                     </Heading>
                     <Flex direction="row" gap="5" className="pt-4">
-                        <Link href="https://instagram.com" title="Instagram">
-                            <InstagramLogoIcon className="h-6 w-6 text-primary hover:text-primaryDark"/>
+                        <Link
+                            href="https://instagram.com/coachchuyvera"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Instagram"
+                        >
+                            <InstagramLogoIcon
+                                className="h-6 w-6 text-primary hover:text-indigo-400 transition-colors duration-200"/>
                         </Link>
-                        <Link href="https://x.com" title="twitter or x">
-                            <TwitterLogoIcon className="h-6 w-6 text-primary hover:text-primaryDark"/>
+                        <Link
+                            href="https://twitter.com/coachchuyvera"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Twitter"
+                        >
+                            <TwitterLogoIcon
+                                className="h-6 w-6 text-primary hover:text-indigo-400 transition-colors duration-200"/>
                         </Link>
-                        <Link href="https://facebook.com" title="facebook">
-                            <FontFamilyIcon className="h-6 w-6 text-primary hover:text-primaryDark"/>
+                        <Link
+                            href="https://linkedin.com/in/coachchuyvera"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn"
+                        >
+                            <LinkedInLogoIcon
+                                className="h-6 w-6 text-primary hover:text-indigo-400 transition-colors duration-200"/>
                         </Link>
                     </Flex>
                 </Flex>

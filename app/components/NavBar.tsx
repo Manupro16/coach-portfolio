@@ -4,21 +4,23 @@
 import React from 'react';
 import {Button, Flex, Link, Text, DropdownMenu} from "@radix-ui/themes"
 
-// Custom hook to detect media query
+
 function useMediaQuery(query: string): boolean {
-    const [matches, setMatches] = React.useState(false);
+  const [matches, setMatches] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
-    React.useEffect(() => {
-        const mediaQueryList = window.matchMedia(query);
-        const updateMatches = () => setMatches(mediaQueryList.matches);
+  React.useEffect(() => {
+    setMounted(true);
+    const mediaQueryList = window.matchMedia(query);
 
-        updateMatches();
-        mediaQueryList.addEventListener('change', updateMatches);
-        return () => mediaQueryList.removeEventListener('change', updateMatches);
-    }, [query]);
+    const updateMatches = () => setMatches(mediaQueryList.matches);
+    updateMatches();
 
-    return matches;
+    mediaQueryList.addEventListener('change', updateMatches);
+    return () => mediaQueryList.removeEventListener('change', updateMatches);
+  }, [query]);
 
+  return mounted ? matches : false;
 }
 
 
@@ -43,8 +45,8 @@ const MobileNav: React.FC<{ navsLinks: { label: string; href: string }[] }> = ({
         </DropdownMenu.Trigger>
         <DropdownMenu.Content size="2" variant="soft" color="indigo" className="z-50">
             {navsLinks.map((nav, index) => (
-                <React.Fragment key={index}>
-                    <DropdownMenu.Item>
+                <React.Fragment key={index} >
+                    <DropdownMenu.Item asChild>
                         <Link href={nav.href}>
                             <Text as="span" style={{color: 'white'}}>
                                 {nav.label}
@@ -59,17 +61,14 @@ const MobileNav: React.FC<{ navsLinks: { label: string; href: string }[] }> = ({
             ))}
         </DropdownMenu.Content>
     </DropdownMenu.Root>
+);
 
-
-
-
-)
 
 
 const NavBar: React.FC = () => {
 
     const navsLinks = [
-        {label: 'HOME', href: '/home'},
+        {label: 'HOME', href: '/'},
         {label: 'ABOUT', href: '/about'},
         {label: 'CAREER', href: '/career'},
         {label: 'STATISTICS', href: '/statistics'},
@@ -78,6 +77,7 @@ const NavBar: React.FC = () => {
         {label: 'PLAYERS', href: '/players'},
         {label: 'PHILOSOPHY', href: '/philosophy'}
     ]
+
 
     // Check if the screen width is 768px or less (adjust as needed)
     const isMobile = useMediaQuery('(max-width: 768px)');

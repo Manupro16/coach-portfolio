@@ -4,7 +4,7 @@ import WelcomeSection from '@/app/components/home/WelcomeSection';
 function Home() {
   return (
     <>
-      <section >
+      <section className="relative" >
         <WelcomeSection />
       </section>
       {/*<section className="py-8">*/}

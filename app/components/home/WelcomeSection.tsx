@@ -1,8 +1,44 @@
+'use client'
+
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import Image from "next/image";
+import useGsapWaveAnimation from "@/app/hooks/useGsapWaveAnimation";
 
 
 function WelcomeSection() {
+
+
+    const animations = [
+        {
+            targetId: 'wavePathTop',
+            duration: 25, // Increased duration for slower animation
+            repeat: -1,
+            paths: [
+                // Path 1: Original path
+                'M0,128L48,138.7C96,149,192,171,288,181.3C384,192,480,192,576,176C672,160,768,128,864,112C960,96,1056,96,1152,128C1248,160,1344,224,1392,256L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+                // Path 2: Slight variation
+                'M0,140L48,150C96,160,192,182,288,192C384,202,480,202,576,186C672,170,768,138,864,122C960,106,1056,106,1152,138C1248,170,1344,234,1392,266L1440,298L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+                // Path 3: Back to original for smooth looping
+                'M0,128L48,138.7C96,149,192,171,288,181.3C384,192,480,192,576,176C672,160,768,128,864,112C960,96,1056,96,1152,128C1248,160,1344,224,1392,256L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z',
+            ],
+        },
+        {
+            targetId: 'wavePathBottom',
+            duration: 25, // Increased duration
+            repeat: -1,
+            paths: [
+                // Path 1: Original path
+                'M0,256L48,224C96,192,192,128,288,106.7C384,85,480,107,576,122.7C672,139,768,149,864,144C960,139,1056,117,1152,122.7C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
+                // Path 2: Slight variation
+                'M0,250L48,218C96,186,192,122,288,100.7C384,79,480,101,576,116.7C672,133,768,143,864,138C960,133,1056,111,1152,116.7C1248,122,1344,154,1392,170L1440,186L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
+                // Path 3: Back to original for smooth looping
+                'M0,256L48,224C96,192,192,128,288,106.7C384,85,480,107,576,122.7C672,139,768,149,864,144C960,139,1056,117,1152,122.7C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z',
+            ],
+        },
+    ];
+
+    useGsapWaveAnimation(animations);
+
     return (
         <>
             {/* Top wave */}
@@ -32,7 +68,7 @@ function WelcomeSection() {
                         Professional Football Coach
                     </Text>
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
-                    <Box as="div" className="max-w-xl text-center md:text-left" >
+                    <Box as="div" className="max-w-xl text-center md:text-left">
                         <Heading as="h2" size="6" weight="medium" className="text-textLight">
                             Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
                         </Heading>

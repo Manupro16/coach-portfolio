@@ -32,7 +32,7 @@ const BasicComponent: React.FC = () => {
                 className="py-8 px-4 sm:px-6 lg:px-8"
                 columns={{ initial: '1' }}
                 rows="auto"
-                gapY={{ initial: '4', md: "8" }}
+                gap={{ initial: '4', md: "9" }}
             >
                 {/* Header Section */}
                 <Flex

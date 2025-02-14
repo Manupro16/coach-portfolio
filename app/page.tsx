@@ -4,7 +4,7 @@ import {Grid} from "@radix-ui/themes";
 
 function Home() {
     return (
-        <Grid as='div' columns='1' rows='auto auto' gap="9">
+        <Grid as='div' columns='1' rows='auto auto'>
             <section className="relative">
                 <WelcomeSection/>
             </section>

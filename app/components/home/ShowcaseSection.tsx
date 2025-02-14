@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
+import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import VideoCard from "@/app/components/home/components/VideoCard";
 
 const BasicComponent: React.FC = () => {
@@ -27,12 +27,28 @@ const BasicComponent: React.FC = () => {
 
     return (
         <>
-           <Grid
+            {/* Top SVG Wave */}
+            <Box
+                as="div"
+                className="absolute inset-x-0 top-0 w-full h-[40%] pointer-events-none z-0 overflow-hidden"
+            >
+                <svg
+                    viewBox="0 0 1728 320"
+                    className="w-full h-full fill-current text-primaryDark opacity-30"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        id="showcaseWavePathTop" // Add ID for GSAP animation
+                        d="M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,0 L0,0 Z"
+                    ></path>
+                </svg>
+            </Box>
+            <Grid
                 as="div"
                 className="py-8 px-4 sm:px-6 lg:px-8 pt-12"
-                columns={{ initial: '1' }}
+                columns={{initial: '1'}}
                 rows="auto"
-                gap={{ initial: '4', md: "9" }}
+                gap={{initial: '4', md: "9"}}
             >
                 {/* Header Section */}
                 <Flex
@@ -45,10 +61,11 @@ const BasicComponent: React.FC = () => {
                         No Matter Where He Goes, His Philosophies and Style Remain the Same
                     </Heading>
                     <Text size="4" className="text-textMuted max-w-2xl text-center">
-                        An introduction to the history of Chuy Vera&#39;s amazing soccer career. This showcase provides you with clips of his teams in each season and his impact on the club.
+                        An introduction to the history of Chuy Vera&#39;s amazing soccer career. This showcase provides
+                        you with clips of his teams in each season and his impact on the club.
                     </Text>
                 </Flex>
-               {/*Video Cards Section */}
+                {/*Video Cards Section */}
                 <Flex
                     direction="column"
                     className="w-full py-8 px-4 sm:px-6 lg:px-8"
@@ -57,7 +74,7 @@ const BasicComponent: React.FC = () => {
                     as="div"
                 >
                     <Grid
-                        columns={{ initial: '1', sm: '1', md: '2', lg: '3' }}
+                        columns={{initial: '1', sm: '1', md: '2', lg: '3'}}
                         gap="6"
                         className="w-full"
                     >
@@ -74,13 +91,29 @@ const BasicComponent: React.FC = () => {
                     className="z-10 py-4"
                 >
                     <Link href="/teams">
-                        <Button className="px-6 py-3 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors">
+                        <Button
+                            className="px-6 py-3 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors">
                             Explore More
                         </Button>
                     </Link>
                 </Flex>
-
-           </Grid>
+            </Grid>
+            {/* Bottom SVG Wave */}
+            <Box
+                as="div"
+                className="absolute inset-x-0 bottom-0 w-full h-[30%] pointer-events-none z-0 overflow-hidden"
+            >
+                <svg
+                    viewBox="0 0 1728 320"
+                    className="w-full h-full fill-current text-primaryDark opacity-30"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        id="showcaseWavePathBottom" // Add ID for GSAP animation
+                        d="M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,320 L0,320 Z"
+                    />
+                </svg>
+            </Box>
         </>
     );
 };

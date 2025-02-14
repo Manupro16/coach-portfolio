@@ -18,11 +18,12 @@ function WelcomeSection() {
                     />
                 </svg>
             </Box>
-            <Grid as="div" columns={{initial: "1", md: "1fr 1fr"}} rows="auto" gap={{initial: "6", md: "9"}} className=" pb-16">
-
-                <Flex as="div" className="p-4 sm:p-6 md:p-10 z-10" direction="column" gap="4">
+            <Grid as="div" columns={{initial: "1", md: "1fr 1fr"}} rows="auto" gap={{initial: "6", md: "9"}}
+                  className=" pb-16">
+                <Flex as="div" className="p-4 sm:p-6 md:p-10 z-10" direction="column" gap={{initial: "4", md: "2"}}
+                      align={{initial: "center", md: "start"}}>
                     <Heading as="h1" size={{initial: "6", md: "8"}} weight="bold"
-                             className="text-textLight leading-tight relative"
+                             className="text-textLight leading-tight"
                              style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)"}}>
                         El Chuy Vera
                     </Heading>
@@ -31,7 +32,7 @@ function WelcomeSection() {
                         Professional Football Coach
                     </Text>
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
-                    <Box as="div" className="max-w-xl">
+                    <Box as="div" className="max-w-xl text-center md:text-left" >
                         <Heading as="h2" size="6" weight="medium" className="text-textLight">
                             Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
                         </Heading>
@@ -108,18 +109,18 @@ function WelcomeSection() {
                 </Flex>
             </Grid>
             {/* Bottom wave */}
-                <Box as="div" className="absolute inset-x-0 bottom-0 w-full h-[20%]">
-                    <svg
-                        viewBox="0 0 1440 320"
-                        className="w-full h-full fill-current text-primaryDark opacity-30"
-                        preserveAspectRatio="none"
-                    >
-                        <path
-                            id="wavePathBottom"
-                            d="M0,256L48,224C96,192,192,128,288,106.7C384,85,480,107,576,122.7C672,139,768,149,864,144C960,139,1056,117,1152,122.7C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                        />
-                    </svg>
-                </Box>
+            <Box as="div" className="absolute inset-x-0 bottom-0 w-full h-[20%]">
+                <svg
+                    viewBox="0 0 1440 320"
+                    className="w-full h-full fill-current text-primaryDark opacity-30"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        id="wavePathBottom"
+                        d="M0,256L48,224C96,192,192,128,288,106.7C384,85,480,107,576,122.7C672,139,768,149,864,144C960,139,1056,117,1152,122.7C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                    />
+                </svg>
+            </Box>
         </>
 
 

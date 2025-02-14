@@ -18,7 +18,7 @@ function WelcomeSection() {
                     />
                 </svg>
             </Box>
-            <Grid as="div" columns={{initial: "1", md: "1fr 1fr"}} rows="auto" gap={{initial: "6", md: "9"}}>
+            <Grid as="div" columns={{initial: "1", md: "1fr 1fr"}} rows="auto" gap={{initial: "6", md: "9"}} className=" pb-16">
 
                 <Flex as="div" className="p-4 sm:p-6 md:p-10 z-10" direction="column" gap="4">
                     <Heading as="h1" size={{initial: "6", md: "8"}} weight="bold"
@@ -52,7 +52,7 @@ function WelcomeSection() {
                         </Button>
                     </Link>
                 </Flex>
-                <Flex as="div" align="center" justify="center" className="relative w-full z-10">
+                <Flex as="div" align="center" justify="center" className="relative w-full z-10 pt-12">
                     <Box
                         as="div"
                         className="relative w-[70%] h-[350px] sm:h-[450px] md:h-[500px] border border-borderDark rounded-lg shadow-lg overflow-hidden"
@@ -75,7 +75,7 @@ function WelcomeSection() {
                     as="div"
                     direction="column"
                     align="center"
-                    className="text-center p-8 lg:col-span-2"
+                    className="text-center pt-12 p-12 lg:col-span-2"
                 >
                     <Heading
                         as="h2"

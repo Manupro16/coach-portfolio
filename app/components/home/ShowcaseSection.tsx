@@ -29,7 +29,7 @@ const BasicComponent: React.FC = () => {
         <>
            <Grid
                 as="div"
-                className="py-8 px-4 sm:px-6 lg:px-8"
+                className="py-8 px-4 sm:px-6 lg:px-8 pt-12"
                 columns={{ initial: '1' }}
                 rows="auto"
                 gap={{ initial: '4', md: "9" }}

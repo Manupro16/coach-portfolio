@@ -76,7 +76,7 @@ function WelcomeSection() {
                     as="div"
                     direction="column"
                     align="center"
-                    className="text-center pt-12 p-12 lg:col-span-2"
+                    className="relative text-center pt-12 p-12 lg:col-span-2"
                 >
                     <Heading
                         as="h2"

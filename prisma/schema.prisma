@@ -24,3 +24,11 @@ model ShowcaseVideo {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model WelcomeContent {
+  id        Int      @id @default(autoincrement())
+  title     String // Main title for the Welcome section
+  subtitle  String? // Optional subtitle
+  imageUrl  String // URL to the welcome image stored in a cloud service
+  updatedAt DateTime @updatedAt
+}

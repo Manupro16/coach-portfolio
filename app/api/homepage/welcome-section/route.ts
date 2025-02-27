@@ -27,10 +27,10 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const title = formData.get('title')?.toString();
     const subtitle = formData.get('subtitle')?.toString() || null; // Store null if not provided
-    const imageUrl = formData.get('imageUrl')?.toString();
+    const imageSrc = formData.get('imageSrc')?.toString();
 
     // Basic validation
-    if (!title || !imageUrl) {
+    if (!title || !imageSrc) {
       return NextResponse.json(
         { error: 'Title and imageUrl are required.' },
         { status: 400 }
@@ -38,9 +38,9 @@ export async function POST(req: Request) {
     }
 
     const prismaData: Prisma.WelcomeContentCreateInput = {
-      title,
-      subtitle,
-      imageUrl,
+      title: title,
+      subtitle: subtitle,
+      imageSrc: imageSrc,
     };
 
     await prisma.welcomeContent.create({ data: prismaData });
@@ -60,7 +60,7 @@ export async function PUT(req: Request) {
   try {
     const body = await req.json();
     // Ensure the body includes an id and the fields to update.
-    const { id, title, subtitle, imageUrl } = body;
+    const { id, title, subtitle, imageSrc } = body;
 
     if (!id) {
       return NextResponse.json({ error: 'ID is required for updating.' }, { status: 400 });
@@ -72,7 +72,7 @@ export async function PUT(req: Request) {
         // Only update fields if provided; you can adjust validation as needed.
         title: title ?? undefined,
         subtitle: subtitle ?? undefined,
-        imageUrl: imageUrl ?? undefined,
+        imageSrc: imageSrc ?? undefined,
       },
     });
 

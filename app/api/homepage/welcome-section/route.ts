@@ -58,18 +58,20 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const body = await req.json();
-    // Ensure the body includes an id and the fields to update.
-    const { id, title, subtitle, imageSrc } = body;
+    const formData = await req.formData();
+    // Extract form fields from the FormData object
+    const id = formData.get('id')?.toString();
+    const title = formData.get('title')?.toString();
+    const subtitle = formData.get('subtitle')?.toString();
+    const imageSrc = formData.get('imageSrc')?.toString();
 
     if (!id) {
       return NextResponse.json({ error: 'ID is required for updating.' }, { status: 400 });
     }
 
     const updatedRecord = await prisma.welcomeContent.update({
-      where: { id: Number(id) }, // Convert id to number if necessary
+      where: { id: Number(id) }, // Convert the id to a number
       data: {
-        // Only update fields if provided; you can adjust validation as needed.
         title: title ?? undefined,
         subtitle: subtitle ?? undefined,
         imageSrc: imageSrc ?? undefined,

@@ -3,9 +3,37 @@
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import Image from "next/image";
 import useGsapWaveAnimation from "@/app/hooks/useGsapWaveAnimation";
+import {WelcomeContent} from '@prisma/client';
+import {useState, useEffect} from "react";
+import axios from 'axios';
+import WelcomeSectionSkeleton from "@/app/components/home/components/WelcomeSectionSkeleton";
 
 
 function WelcomeSection() {
+    const [data, setData] = useState<WelcomeContent | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+
+    useEffect(() => {
+        async function fetchWelcomeContent() {
+            try {
+                const response = await axios.get<WelcomeContent>('/api/homepage/welcome-section');
+                setData(response.data);
+            } catch (err: unknown) {
+                console.error('Error fetching welcome content:', err);
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError('Unknown error occurred');
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchWelcomeContent();
+    }, []);
 
 
     const animations = [
@@ -39,6 +67,14 @@ function WelcomeSection() {
 
     useGsapWaveAnimation(animations);
 
+    if (loading) {
+        return <WelcomeSectionSkeleton />;
+    }
+
+    if (error) {
+          return <div>Error: {error}</div>;
+    }
+
     return (
         <>
             {/* Top wave */}
@@ -70,16 +106,10 @@ function WelcomeSection() {
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
                     <Box as="div" className="max-w-xl text-center md:text-left">
                         <Heading as="h2" size="6" weight="medium" className="text-textLight">
-                            Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
+                            {data!.title}
                         </Heading>
                         <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-                            As a dedicated football coach, Chuy Vera has spent decades shaping
-                            the future of Venezuelan football. His journey has seen him lead top
-                            teams like Estudiantes de Mérida, Zamora FC, and Deportivo Táchira
-                            to success, while his international experience, including a pivotal
-                            role at FC Dallas in the MLS, highlights his expertise in player
-                            development and strategic coaching. Chuy&#39;s leadership and passion
-                            continue to inspire players and teams across the footballing world.
+                            {data!.subtitle}
                         </Text>
                     </Box>
                     <Link href="/teams">
@@ -98,13 +128,13 @@ function WelcomeSection() {
                             src="/pic/chuyVeraDallasCup.jpg"
                             alt="Coach Chuy Vera at Dallas Cup"
                             fill
-                            className="object-cover filter brightness-90 contrast-105 transition-transform duration-500 hover:scale-105"
+                            className="object-cover filter brightness-20 contrast-100 transition-transform duration-500 hover:scale-105"
                             quality={100}
                             priority
                         />
                         <Box
                             as="div"
-                            className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"
+                            className="absolute inset-0 bg-gradient-to-b from-transparent to-black  "
                         />
                     </Box>
                 </Flex>
@@ -158,11 +188,21 @@ function WelcomeSection() {
                 </svg>
             </Box>
         </>
-
-
     );
 }
 
 export default WelcomeSection;
 
-
+          //
+          // <Heading as="h2" size="6" weight="medium" className="text-textLight">
+          //                   Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
+          //               </Heading>
+          //               <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
+          //                   As a dedicated football coach, Chuy Vera has spent decades shaping
+          //                   the future of Venezuelan football. His journey has seen him lead top
+          //                   teams like Estudiantes de Mérida, Zamora FC, and Deportivo Táchira
+          //                   to success, while his international experience, including a pivotal
+          //                   role at FC Dallas in the MLS, highlights his expertise in player
+          //                   development and strategic coaching. Chuy&#39;s leadership and passion
+          //                   continue to inspire players and teams across the footballing world.
+          //               </Text>

@@ -5,15 +5,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Flex, Heading, Text, Card, Box, Badge } from '@radix-ui/themes';
+import { ShowcaseVideo } from '@prisma/client';
 
-interface VideoCardProps {
-    team: string;
-    season: string;
-    videoSrc: string;
-    description: string;
-}
 
-const VideoCard: React.FC<VideoCardProps> = ({
+
+
+const VideoCard: React.FC<ShowcaseVideo> = ({
                                                  team,
                                                  season,
                                                  videoSrc,

@@ -1,34 +1,21 @@
 import React from 'react';
-import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
+import {Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import VideoCard from "@/app/components/home/components/VideoCard";
 import {TopWave, BottomWave} from '@/app/components/svgWaves';
+import {prisma} from '@/lib/prisma';
 
-const BasicComponent: React.FC = () => {
+async function ShowCaseSection() {
 
-    const showcases = [
-        {
-            team: 'Zamora FC Venezuela',
-            season: '2010/2011',
-            videoSrc: '/videos/zamora_2010.mp4',
-            description: 'Highlights from the 2010/2011 season.',
-        },
-        {
-            team: 'Estudiantes de Mérida',
-            season: '2012/2013',
-            videoSrc: '/videos/estudiantes_2012.mp4',
-            description: 'Key moments from the 2012/2013 season.',
-        },
-        {
-            team: 'Deportivo Táchira',
-            season: '2014/2015',
-            videoSrc: '/videos/tachira_2014.mp4',
-            description: 'Memorable plays from the 2014/2015 season.',
-        },
-    ];
+    const data = await prisma.showcaseVideo.findMany({
+            orderBy: {
+                createdAt: "desc"
+            }
+        }
+    )
 
     return (
         <>
-            <TopWave />
+            <TopWave/>
             <Grid
                 as="div"
                 className="py-8 px-4 sm:px-6 lg:px-8 pt-12"
@@ -64,7 +51,7 @@ const BasicComponent: React.FC = () => {
                         gap="6"
                         className="w-full"
                     >
-                        {showcases.map((item, index) => (
+                        {data.map((item, index) => (
                             <VideoCard key={index} {...item} />
                         ))}
                     </Grid>
@@ -84,9 +71,31 @@ const BasicComponent: React.FC = () => {
                     </Link>
                 </Flex>
             </Grid>
-            <BottomWave />
+            <BottomWave/>
         </>
     );
-};
+}
 
-export default BasicComponent;
+export default ShowCaseSection
+
+
+    // const showcases = [
+    //     {
+    //         team: 'Zamora FC Venezuela',
+    //         season: '2010/2011',
+    //         videoSrc: '/videos/zamora_2010.mp4',
+    //         description: 'Highlights from the 2010/2011 season.',
+    //     },
+    //     {
+    //         team: 'Estudiantes de Mérida',
+    //         season: '2012/2013',
+    //         videoSrc: '/videos/estudiantes_2012.mp4',
+    //         description: 'Key moments from the 2012/2013 season.',
+    //     },
+    //     {
+    //         team: 'Deportivo Táchira',
+    //         season: '2014/2015',
+    //         videoSrc: '/videos/tachira_2014.mp4',
+    //         description: 'Memorable plays from the 2014/2015 season.',
+    //     },
+    // ];

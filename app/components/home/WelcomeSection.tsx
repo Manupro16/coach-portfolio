@@ -1,52 +1,16 @@
-'use client'
 
-import { TopWave, BottomWave } from '@/app/components/svgWaves';
+import {TopWave, BottomWave} from '@/app/components/svgWaves';
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import Image from "next/image";
-import {WelcomeContent} from '@prisma/client';
-import {useState, useEffect} from "react";
-import axios from 'axios';
-import WelcomeSectionSkeleton from "@/app/components/home/components/WelcomeSectionSkeleton";
+import { prisma } from '@/lib/prisma';
 
+async function WelcomeSection() {
 
-function WelcomeSection() {
-    const [data, setData] = useState<WelcomeContent | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-
-    useEffect(() => {
-        async function fetchWelcomeContent() {
-            try {
-                const response = await axios.get<WelcomeContent>('/api/homepage/welcome-section');
-                setData(response.data);
-            } catch (err: unknown) {
-                console.error('Error fetching welcome content:', err);
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError('Unknown error occurred');
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchWelcomeContent();
-    }, []);
-
-
-    if (loading) {
-        return <WelcomeSectionSkeleton />;
-    }
-
-    if (error) {
-          return <div>Error: {error}</div>;
-    }
+    const data = await prisma.welcomeContent.findFirst()
 
     return (
         <>
-            <TopWave />
+            <TopWave/>
             <Grid as="div" columns={{initial: "1", md: "1fr 1fr"}} rows="auto" gap={{initial: "6", md: "9"}}
                   className=" pb-16">
                 <Flex as="div" className="p-4 sm:p-6 md:p-10 z-10" direction="column" gap={{initial: "4", md: "2"}}
@@ -61,14 +25,13 @@ function WelcomeSection() {
                         Professional Football Coach
                     </Text>
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
-                    <Box as="div" className="max-w-xl text-center md:text-left">
-                        <Heading as="h2" size="6" weight="medium" className="text-textLight">
-                            {data!.title}
-                        </Heading>
-                        <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-                            {data!.subtitle}
-                        </Text>
-                    </Box>
+
+                    <Heading as="h2" size="6" weight="medium" className="text-textLight">
+                        {data?.title}
+                    </Heading>
+                    <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
+                        {data?.subtitle}
+                    </Text>
                     <Link href="/teams">
                         <Button
                             className="mt-4 px-4 py-2 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors">
@@ -131,23 +94,20 @@ function WelcomeSection() {
                     </Text>
                 </Flex>
             </Grid>
-            <BottomWave />
+            <BottomWave/>
         </>
     );
 }
 
 export default WelcomeSection;
 
-          //
-          // <Heading as="h2" size="6" weight="medium" className="text-textLight">
-          //                   Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
-          //               </Heading>
-          //               <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-          //                   As a dedicated football coach, Chuy Vera has spent decades shaping
-          //                   the future of Venezuelan football. His journey has seen him lead top
-          //                   teams like Estudiantes de Mérida, Zamora FC, and Deportivo Táchira
-          //                   to success, while his international experience, including a pivotal
-          //                   role at FC Dallas in the MLS, highlights his expertise in player
-          //                   development and strategic coaching. Chuy&#39;s leadership and passion
-          //                   continue to inspire players and teams across the footballing world.
-          //               </Text>
+
+// Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
+
+      // As a dedicated football coach, Chuy Vera has spent decades shaping
+      //                   the future of Venezuelan football. His journey has seen him lead top
+      //                   teams like Estudiantes de Mérida, Zamora FC, and Deportivo Táchira
+      //                   to success, while his international experience, including a pivotal
+      //                   role at FC Dallas in the MLS, highlights his expertise in player
+      //                   development and strategic coaching. Chuy&#39;s leadership and passion
+      //                   continue to inspire players and teams across the footballing world.

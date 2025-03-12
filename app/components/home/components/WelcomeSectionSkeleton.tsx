@@ -1,5 +1,4 @@
 // app/components/home/welcome-section/WelcomeSectionSkeleton.tsx
-'use client';
 
 import { Box, Flex, Grid } from '@radix-ui/themes';
 

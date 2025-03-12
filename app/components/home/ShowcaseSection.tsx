@@ -1,9 +1,7 @@
-'use client';
-
 import React from 'react';
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import VideoCard from "@/app/components/home/components/VideoCard";
-import useGsapWaveAnimation from "@/app/hooks/useGsapWaveAnimation";
+import {TopWave, BottomWave} from '@/app/components/svgWaves';
 
 const BasicComponent: React.FC = () => {
 
@@ -28,55 +26,9 @@ const BasicComponent: React.FC = () => {
         },
     ];
 
-     const animations = [
-        {
-            targetId: 'showcaseWavePathTop',
-            duration: 25, // Total duration for the entire animation cycle
-            repeat: -1,
-            paths: [
-                // Path 1 (Original)
-                'M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,0 L0,0 Z',
-                // Path 2
-                'M0,224 C144,192,288,160,432,149.3 C576,138.7,720,138.7 864,154.7 C1008,170.7,1152,202.7,1296,202.7 C1440,202.7,1584,170.7,1728,160 L1728,0 L0,0 Z',
-                // Path 3 (Same as Path 1)
-                'M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,0 L0,0 Z',
-            ],
-        },
-        {
-            targetId: 'showcaseWavePathBottom',
-            duration: 25, // Total duration for the entire animation cycle
-            repeat: -1,
-            paths: [
-                // Path 1 (Original)
-                'M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,320 L0,320 Z',
-                // Path 2
-                'M0,256 C144,224,288,192,432,181.3 C576,170.7,720,170.7 864,186.7 C1008,202.7,1152,234.7,1296,234.7 C1440,234.7,1584,202.7,1728,192 L1728,320 L0,320 Z',
-                // Path 3 (Same as Path 1)
-                'M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,320 L0,320 Z',
-            ],
-        },
-    ];
-
-     useGsapWaveAnimation(animations);
-
     return (
         <>
-            {/* Top SVG Wave */}
-            <Box
-                as="div"
-                className="absolute inset-x-0 top-0 w-full h-[40%] pointer-events-none z-0 overflow-hidden"
-            >
-                <svg
-                    viewBox="0 0 1728 320"
-                    className="w-full h-full fill-current text-primaryDark opacity-30"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        id="showcaseWavePathTop" // Add ID for GSAP animation
-                        d="M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,0 L0,0 Z"
-                    ></path>
-                </svg>
-            </Box>
+            <TopWave />
             <Grid
                 as="div"
                 className="py-8 px-4 sm:px-6 lg:px-8 pt-12"
@@ -132,22 +84,7 @@ const BasicComponent: React.FC = () => {
                     </Link>
                 </Flex>
             </Grid>
-            {/* Bottom SVG Wave */}
-            <Box
-                as="div"
-                className="absolute inset-x-0 bottom-0 w-full h-[30%] pointer-events-none z-0 overflow-hidden"
-            >
-                <svg
-                    viewBox="0 0 1728 320"
-                    className="w-full h-full fill-current text-primaryDark opacity-30"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        id="showcaseWavePathBottom" // Add ID for GSAP animation
-                        d="M0,192 C144,160,288,128,432,133.3 C576,138.7,720,170.7 864,165.3 C1008,160,1152,117,1296,101.3 C1440,85.3,1584,96,1728,106.7 L1728,320 L0,320 Z"
-                    />
-                </svg>
-            </Box>
+            <BottomWave />
         </>
     );
 };

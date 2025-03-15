@@ -10,7 +10,7 @@ export async function GET() {
     const welcomeSectionData = await prisma.welcomeContent.findFirst();
 
     if (!welcomeSectionData) {
-      return new NextResponse(null, { status: 204 });
+      return new NextResponse("", { status: 204 });
     }
 
     return NextResponse.json(welcomeSectionData, { status: 200 });

@@ -27,10 +27,10 @@ async function WelcomeSection() {
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
 
                     <Heading as="h2" size="6" weight="medium" className="text-textLight">
-                        {data?.title}
+                        {data?.title || "Default Title"}
                     </Heading>
                     <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-                        {data?.subtitle}
+                       {data?.subtitle || "Default Subtitle"}
                     </Text>
                     <Link href="/teams">
                         <Button

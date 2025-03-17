@@ -25,9 +25,11 @@ model ShowcaseVideo {
 }
 
 model WelcomeContent {
-  id        Int      @id @default(autoincrement())
-  title     String // Main title for the Welcome section
-  subtitle  String? // Optional subtitle
-  imageSrc  String // URL to the welcome image stored in a cloud service
-  updatedAt DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  title           String // Main title for the Welcome section
+  subtitle        String
+  contentTitle    String // Markdown content for the Welcome section
+  contentSubtitle String
+  imageSrc        String // URL to the welcome image stored in a cloud service
+  updatedAt       DateTime @updatedAt
 }

@@ -38,6 +38,13 @@ async function WelcomeSection() {
                             Explore More
                         </Button>
                     </Link>
+                    <Link href="/admin/edit/home/welcome">
+                        <Button
+                            className="mt-4 px-4 py-2 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors"
+                        >
+                            Edit Section
+                        </Button>
+                    </Link>
                 </Flex>
                 <Flex as="div" align="center" justify="center" className="relative w-full z-10 pt-12">
                     <Box

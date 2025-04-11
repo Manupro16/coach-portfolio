@@ -1,7 +1,10 @@
+import EditFrom from "@/app/admin/edit/components/EditFrom";
 
 
 function EditWelcomeSection() {
-    return <div>Hello World</div>
+    return (
+        <EditFrom />
+    )
 }
 
 

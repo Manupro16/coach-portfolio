@@ -1,12 +1,33 @@
 'use client'
 
-import {useState} from "react";
-import {Box, Flex, Heading} from "@radix-ui/themes";
+
+
+import { useState } from "react";
+import { Box, Flex, Heading } from "@radix-ui/themes";
+import dynamic from "next/dynamic";
+import { useForm } from "react-hook-form";
+
+const DynamicReactMDEditor = dynamic(() => import('@/app/admin/edit/components/DynamicReactMDEditor'), {
+    ssr: false,
+});
 
 
 function EditForm() {
 
     const [colorMode, setColorMode] = useState<"light" | "dark">('dark');
+    const [isLoading, setIsLoading] = useState(true);
+     const [formError, setFormError] = useState<string | null>(null);
+    const [formSuccess, setFormSuccess] = useState<string | null>(null);
+
+       const {
+        register,
+        handleSubmit,
+        control,
+        setValue,
+        formState: {errors, isSubmitting},
+        watch,
+        reset,
+    } = useForm();
 
     return (
         <Flex as="div" justify="center"  className="w-full h-full">

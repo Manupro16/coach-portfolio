@@ -16,6 +16,7 @@ const DynamicReactMDEditor: React.FC<DynamicReactMDEditorProps> = ({ value, onCh
     return (
         <Box className={`rounded-lg shadow-md p-2 transition-colors duration-300 ${colorMode === 'dark' ? 'bg-primaryDark' : 'bg-gray-600'}`}>
             <MDEditor
+                aria-label="Markdown Editor"
                 data-color-mode={colorMode}
                 value={value}
                 onChange={onChange}

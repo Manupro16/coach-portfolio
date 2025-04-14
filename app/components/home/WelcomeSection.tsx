@@ -1,7 +1,6 @@
 
 import {TopWave, BottomWave} from '@/app/components/svgWaves';
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
-import Image from "next/image";
 import { prisma } from '@/lib/prisma';
 
 async function WelcomeSection() {
@@ -18,19 +17,19 @@ async function WelcomeSection() {
                     <Heading as="h1" size={{initial: "6", md: "8"}} weight="bold"
                              className="text-textLight leading-tight"
                              style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)"}}>
-                        El Chuy Vera
+                         {data?.title || "Default Title"}
                     </Heading>
                     <Text as="p" size="4" className=" text-textMuted leading-tight"
                           style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)"}}>
-                        Professional Football Coach
+                         {data?.subtitle || "Default Subtitle"}
                     </Text>
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
 
                     <Heading as="h2" size="6" weight="medium" className="text-textLight">
-                        {data?.title || "Default Title"}
+                        {data?.contentTitle || "Default content Title"}
                     </Heading>
                     <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-                       {data?.subtitle || "Default Subtitle"}
+                       {data?.contentSubtitle || "Default content Subtitle"}
                     </Text>
                     <Link href="/teams">
                         <Button
@@ -51,13 +50,10 @@ async function WelcomeSection() {
                         as="div"
                         className="relative w-[70%] h-[350px] sm:h-[450px] md:h-[500px] border border-borderDark rounded-lg shadow-lg overflow-hidden"
                     >
-                        <Image
-                            src={data?.imageSrc ?? "/pic/chuyVeraDallasCup.jpg"}
+                        <img
+                            src={data?.imageSrc ?? "/pic/defaultImage.jpeg"}
                             alt="Coach Chuy Vera at Dallas Cup"
-                            fill
                             className="object-cover filter brightness-20 contrast-100 transition-transform duration-500 hover:scale-105"
-                            quality={100}
-                            priority
                         />
                         <Box
                             as="div"
@@ -108,6 +104,10 @@ async function WelcomeSection() {
 
 export default WelcomeSection;
 
+//  El Chuy Vera
+//
+// Professional Football Coach
+
 
 // Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
 
@@ -118,3 +118,8 @@ export default WelcomeSection;
       //                   role at FC Dallas in the MLS, highlights his expertise in player
       //                   development and strategic coaching. Chuy&#39;s leadership and passion
       //                   continue to inspire players and teams across the footballing world.
+
+
+// Chuy's Professional Portfolio and Showcase of Achievements and Career.
+
+

@@ -25,14 +25,16 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const title = formData.get('title')?.toString();
-    const subtitle = formData.get('subtitle')?.toString() || null; // Store null if not provided
-    const imageSrc = formData.get('imageSrc')?.toString();
+    const title = formData.get('title')?.toString().trim() || "";
+    const subtitle = formData.get('subtitle')?.toString().trim() || ""
+    const imageSrc = formData.get('imageSrc')?.toString().trim() || "";
+    const contentSubtitle = formData.get('contentSubtitle')?.toString().trim() || "";
+    const contentTitle = formData.get('contentTitle')?.toString().trim() || "";
 
     // Basic validation
-    if (!title || !imageSrc) {
+    if (!title || !imageSrc || !subtitle ||!contentSubtitle ||!contentTitle) {
       return NextResponse.json(
-        { error: 'Title and imageUrl are required.' },
+        { error: 'All fields are required.' },
         { status: 400 }
       );
     }
@@ -41,6 +43,8 @@ export async function POST(req: Request) {
       title: title,
       subtitle: subtitle,
       imageSrc: imageSrc,
+      contentSubtitle: contentSubtitle,
+      contentTitle: contentTitle,
     };
 
     await prisma.welcomeContent.create({ data: prismaData });

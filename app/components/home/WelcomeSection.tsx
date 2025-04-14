@@ -52,7 +52,7 @@ async function WelcomeSection() {
                         className="relative w-[70%] h-[350px] sm:h-[450px] md:h-[500px] border border-borderDark rounded-lg shadow-lg overflow-hidden"
                     >
                         <Image
-                            src="/pic/chuyVeraDallasCup.jpg"
+                            src={data?.imageSrc ?? "/pic/chuyVeraDallasCup.jpg"}
                             alt="Coach Chuy Vera at Dallas Cup"
                             fill
                             className="object-cover filter brightness-20 contrast-100 transition-transform duration-500 hover:scale-105"

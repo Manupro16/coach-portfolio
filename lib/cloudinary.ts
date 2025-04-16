@@ -8,8 +8,25 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+export interface CloudinaryUploadResponse {
+  public_id: string;
+  version: number;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  tags: string[];
+  etag: string;
+  original_filename: string;
+  secure_url: string;
+  url: string;
+}
+
+
 // Optionally, create an upload helper function:
-export const uploadImage = async (filePath: string): Promise<any> => {
+export const uploadImage = async (filePath: string): Promise<CloudinaryUploadResponse> => {
   try {
       return await cloudinary.uploader.upload(filePath, {
         folder: "/pic", // optional: use a folder to organize images

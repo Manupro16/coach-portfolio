@@ -51,3 +51,6 @@ export async function PUT(req: Request) {
         return NextResponse.json({error: message}, {status: 500});
     }
 }
+
+// npx @prisma/ppg-tunnel --host 127.0.0.1 --port 52604
+

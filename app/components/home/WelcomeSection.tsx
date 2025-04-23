@@ -53,7 +53,7 @@ async function WelcomeSection() {
                         className="relative w-[70%] h-[350px] sm:h-[450px] md:h-[500px] border border-borderDark rounded-lg shadow-lg overflow-hidden"
                     >
                         <CloudinaryImage
-                            alt="hello"
+                            alt={data?.imageTitle ?? "No default tile for this image at the moment"}
                             src={data?.imageSrc ?? "/pic/defaultImage.jpeg"}
                             fill
                             format="auto"

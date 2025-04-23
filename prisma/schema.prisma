@@ -31,5 +31,6 @@ model WelcomeContent {
   contentTitle    String // Markdown content for the Welcome section
   contentSubtitle String
   imageSrc        String // URL to the welcome image stored in a cloud service
+  imageTitle      String   @default("") // title/caption for the image
   updatedAt       DateTime @updatedAt
 }

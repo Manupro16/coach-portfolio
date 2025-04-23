@@ -2,6 +2,8 @@
 import {TopWave, BottomWave} from '@/app/components/svgWaves';
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import { prisma } from '@/lib/prisma';
+import CloudinaryImage from '@/app/components/CloudinaryImage';
+
 
 async function WelcomeSection() {
 
@@ -50,10 +52,11 @@ async function WelcomeSection() {
                         as="div"
                         className="relative w-[70%] h-[350px] sm:h-[450px] md:h-[500px] border border-borderDark rounded-lg shadow-lg overflow-hidden"
                     >
-                        <img
+                        <CloudinaryImage
+                            alt="hello"
                             src={data?.imageSrc ?? "/pic/defaultImage.jpeg"}
-                            alt="Coach Chuy Vera at Dallas Cup"
-                            className="object-cover filter brightness-20 contrast-100 transition-transform duration-500 hover:scale-105"
+                            width="800"
+                            height="400"
                         />
                         <Box
                             as="div"

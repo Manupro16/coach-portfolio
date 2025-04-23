@@ -108,23 +108,3 @@ async function WelcomeSection() {
 }
 
 export default WelcomeSection;
-
-//  El Chuy Vera
-//
-// Professional Football Coach
-
-
-// Chuy&#39;s Professional Portfolio and Showcase of Achievements and Career.
-
-      // As a dedicated football coach, Chuy Vera has spent decades shaping
-      //                   the future of Venezuelan football. His journey has seen him lead top
-      //                   teams like Estudiantes de Mérida, Zamora FC, and Deportivo Táchira
-      //                   to success, while his international experience, including a pivotal
-      //                   role at FC Dallas in the MLS, highlights his expertise in player
-      //                   development and strategic coaching. Chuy&#39;s leadership and passion
-      //                   continue to inspire players and teams across the footballing world.
-
-
-// Chuy's Professional Portfolio and Showcase of Achievements and Career.
-
-

@@ -34,3 +34,18 @@ model WelcomeContent {
   imageTitle      String   @default("") // title/caption for the image
   updatedAt       DateTime @updatedAt
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String?
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

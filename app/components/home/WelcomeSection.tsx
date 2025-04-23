@@ -55,8 +55,10 @@ async function WelcomeSection() {
                         <CloudinaryImage
                             alt="hello"
                             src={data?.imageSrc ?? "/pic/defaultImage.jpeg"}
-                            width="800"
-                            height="400"
+                            fill
+                            format="auto"
+                            quality="auto"
+                            style={{ objectFit: "cover" }}
                         />
                         <Box
                             as="div"

@@ -3,10 +3,11 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
-import Navbar from "@/app/components/DynamicNavbar";
 import Footer from "@/app/components/Footer";
 import React from "react";
-
+import {SessionProvider} from "next-auth/react";
+import NavBarServer from "@/app/components/NavBarServer";
+import Providers from "@/app/components/Providers";
 
 
 const geistSans = Geist({
@@ -20,9 +21,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coach Chuy Vera - Professional Soccer Coaching",
-  description: "Professional soccer coach specializing in player development and team strategy. Explore coaching philosophy, career history, and training programs.",
-  keywords: ["soccer coaching", "player development", "football training", "team strategy"],
+    title: "Coach Chuy Vera - Professional Soccer Coaching",
+    description: "Professional soccer coach specializing in player development and team strategy. Explore coaching philosophy, career history, and training programs.",
+    keywords: ["soccer coaching", "player development", "football training", "team strategy"],
 };
 
 export default function RootLayout({
@@ -35,11 +36,11 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <Theme className="website-background" appearance="dark" >
-            <Navbar />
+        <Providers>
+            <NavBarServer/>
             {children}
-            <Footer />
-        </Theme>
+            <Footer/>
+        </Providers>
         </body>
         </html>
     );

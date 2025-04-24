@@ -1,9 +1,8 @@
 // app/components/NavBarServer.tsx
 import {getServerSession} from "next-auth";
-import type {NavLink} from "./NavBarClient";
+import NavBarClient, {NavLink} from "./NavBarClient";
 import {Session} from "next-auth";
-import React from "react";
-import NavBarDynamic from "@/app/components/NavBarDynamic";
+import React, {Suspense} from "react";
 
 export default async function NavBarServer() {
     // Fetch the session server-side
@@ -22,8 +21,31 @@ export default async function NavBarServer() {
         ...(session?.user.role === "admin" ? [{label: "ADMIN", href: "/admin"}] : []),
     ];
 
-    // Render the client navbar with session and links
-    return <NavBarDynamic session={session} links={links}/>;
+
+    return (
+        <Suspense fallback={<SkeletonNavbar />}>
+            <NavBarClient session={session} links={links} />
+        </Suspense>
+    )
+
+}
+
+
+// Simple skeleton while the client component hydrates
+function SkeletonNavbar() {
+  return (
+    <nav className="nav-footer-background animate-pulse">
+      <div className="px-4 sm:px-6 md:px-10 py-4 flex justify-between items-center">
+        <div className="w-32 h-6 bg-gray-600 rounded" />
+        <div className="hidden md:flex gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="w-16 h-6 bg-gray-600 rounded" />
+          ))}
+        </div>
+        <div className="md:hidden w-16 h-6 bg-gray-600 rounded" />
+      </div>
+    </nav>
+  )
 }
 
 

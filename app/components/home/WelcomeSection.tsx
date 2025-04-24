@@ -1,13 +1,22 @@
+// app/components/WelcomeSection.tsx
 
 import {TopWave, BottomWave} from '@/app/components/svgWaves';
 import {Box, Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
-import { prisma } from '@/lib/prisma';
+import {prisma} from '@/lib/prisma';
 import CloudinaryImage from '@/app/components/CloudinaryImage';
+import {getServerSession} from "next-auth/next";
+import {authOptions} from "@/lib/auth";
+
+import {FaPencilAlt} from "react-icons/fa"
 
 
 async function WelcomeSection() {
 
-    const data = await prisma.welcomeContent.findFirst()
+    const [data, session] = await Promise.all([
+        prisma.welcomeContent.findFirst(), getServerSession(authOptions)
+    ])
+
+    const isAdmin = session?.user?.role === 'admin';
 
     return (
         <>
@@ -16,14 +25,27 @@ async function WelcomeSection() {
                   className=" pb-16">
                 <Flex as="div" className="p-4 sm:p-6 md:p-10 z-10" direction="column" gap={{initial: "4", md: "2"}}
                       align={{initial: "center", md: "start"}}>
-                    <Heading as="h1" size={{initial: "6", md: "8"}} weight="bold"
-                             className="text-textLight leading-tight"
-                             style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)"}}>
-                         {data?.title || "Default Title"}
-                    </Heading>
+
+                    <Flex
+                        as="div"
+                        align="center"
+                        justify="between"
+                    >
+                        <Heading as="h1" size={{initial: "6", md: "8"}} weight="bold"
+                                 className="text-textLight leading-tight"
+                                 style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.7)"}}>
+                            {data?.title || "Default Title"}
+                        </Heading>
+                        {isAdmin && (
+                            <Link href="/admin/edit/home/welcome" aria-label="Edit welcome section">
+                                <FaPencilAlt
+                                    className="w-5 h-5 text-textLight hover:text-primary transition-colors ml-5"/>
+                            </Link>
+                        )}
+                    </Flex>
                     <Text as="p" size="4" className=" text-textMuted leading-tight"
                           style={{textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)"}}>
-                         {data?.subtitle || "Default Subtitle"}
+                        {data?.subtitle || "Default Subtitle"}
                     </Text>
                     <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-2"/>
 
@@ -31,19 +53,12 @@ async function WelcomeSection() {
                         {data?.contentTitle || "Default content Title"}
                     </Heading>
                     <Text as="p" size="4" className="mt-2 text-textMuted leading-relaxed pt-1">
-                       {data?.contentSubtitle || "Default content Subtitle"}
+                        {data?.contentSubtitle || "Default content Subtitle"}
                     </Text>
                     <Link href="/teams">
                         <Button
                             className="mt-4 px-4 py-2 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors">
                             Explore More
-                        </Button>
-                    </Link>
-                    <Link href="/admin/edit/home/welcome">
-                        <Button
-                            className="mt-4 px-4 py-2 bg-primary text-white rounded-lg shadow-lg hover:bg-primaryDark transition-colors"
-                        >
-                            Edit Section
                         </Button>
                     </Link>
                 </Flex>
@@ -58,7 +73,7 @@ async function WelcomeSection() {
                             fill
                             format="auto"
                             quality="auto"
-                            style={{ objectFit: "cover" }}
+                            style={{objectFit: "cover"}}
                         />
                         <Box
                             as="div"

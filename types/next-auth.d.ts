@@ -1,8 +1,8 @@
 // types/next-auth.d.ts
 
-import { DefaultSession, DefaultUser } from "next-auth";
-import { JWT as DefaultJWT }         from "next-auth/jwt";
-import { Role, User as PrismaUser }  from "@prisma/client";
+import {DefaultSession, DefaultUser} from "next-auth";
+import {JWT as DefaultJWT} from "next-auth/jwt";
+import {Role, User as PrismaUser} from "@prisma/client";
 
 declare module "next-auth" {
   interface Session extends OttenSession {

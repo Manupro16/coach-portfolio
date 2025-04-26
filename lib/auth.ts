@@ -41,28 +41,26 @@ export const authOptions: NextAuthOptions = {
         // …you can drop in OAuth providers here (Google, GitHub, etc.)…
     ],
     callbacks: {
-        // 1) When the JWT is created/updated, stash your user.id & role
+       // 1️⃣ Stash id, role **and** isAdmin on the token
         async jwt({token, user}) {
             if (user) {
                 token.id = user.id;
                 token.role = user.role;
+                token.isAdmin = user.role === 'ADMIN';
             }
             return token;
         },
-        // 2) Each time `useSession()` or `getServerSession()` is called,
-        //    merge those token fields into the session object
+        // 2️⃣ Merge everything into session.user
         async session({session, token}) {
-            if (token && session.user) {
+            if (session.user) {
                 session.user.id = token.id as string;
                 session.user.role = token.role as 'USER' | 'ADMIN';
-                session.user.isAdmin = token.role === 'ADMIN';
+                session.user.isAdmin = token.isAdmin as boolean;
             }
             return session;
         },
     },
 
     secret: process.env.NEXTAUTH_SECRET,
-    pages: {
-        signIn: '/auth/signin',
-    }
+    pages: { signIn: '/auth/signin' }
 }

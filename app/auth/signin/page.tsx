@@ -6,7 +6,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Box, Flex, Heading, Button, Text } from '@radix-ui/themes';
 
 export default function SignInPage() {
-  const { data: status } = useSession();
+  // Destructure correctly:
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const errorParam = searchParams.get('error');
@@ -19,9 +21,8 @@ export default function SignInPage() {
 
   // Redirect authenticated users
   useEffect(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-      if (status === 'authenticated') {
+    // Compare the actual string status
+    if (status === 'authenticated') {
       router.replace(callbackUrl);
     }
   }, [status, router, callbackUrl]);
@@ -63,10 +64,8 @@ export default function SignInPage() {
     }
   };
 
-  // Show loading state while session is being fetched
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-    if (status === 'loading') {
+  // Show loading state
+  if (status === 'loading') {
     return (
       <Flex align="center" justify="center" className="min-h-screen">
         <Text>Loading…</Text>

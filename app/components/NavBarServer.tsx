@@ -3,6 +3,7 @@ import {getServerSession} from "next-auth";
 import NavBarClient, {NavLink} from "./NavBarClient";
 import {Session} from "next-auth";
 import React, {Suspense} from "react";
+import { Role } from "@prisma/client";
 
 export default async function NavBarServer() {
     // Fetch the session server-side
@@ -18,7 +19,7 @@ export default async function NavBarServer() {
         {label: "TEAMS", href: "/teams"},
         {label: "PLAYERS", href: "/players"},
         {label: "PHILOSOPHY", href: "/philosophy"},
-        ...(session?.user.role === "admin" ? [{label: "ADMIN", href: "/admin"}] : []),
+        ...(session?.user.role === Role.ADMIN ? [{label: "ADMIN", href: "/admin"}] : []),
     ];
 
 

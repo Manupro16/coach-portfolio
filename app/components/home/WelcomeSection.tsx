@@ -6,6 +6,7 @@ import {prisma} from '@/lib/prisma';
 import CloudinaryImage from '@/app/components/CloudinaryImage';
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
+import { Role } from "@prisma/client";
 
 import {FaPencilAlt} from "react-icons/fa"
 
@@ -16,7 +17,7 @@ async function WelcomeSection() {
         prisma.welcomeContent.findFirst(), getServerSession(authOptions)
     ])
 
-    const isAdmin = session?.user?.role === 'admin';
+    const isAdmin = session?.user?.role === Role.ADMIN;
 
     return (
         <>

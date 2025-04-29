@@ -10,6 +10,7 @@ import { Role } from "@prisma/client";
 
 import {FaPencilAlt} from "react-icons/fa"
 
+export const dynamic = "force-dynamic";
 
 async function WelcomeSection() {
 
@@ -17,7 +18,7 @@ async function WelcomeSection() {
         prisma.welcomeContent.findFirst(), getServerSession(authOptions)
     ])
 
-    const isAdmin = session?.user?.role === Role.ADMIN;
+    const isAdmin = session?.user.role === Role.ADMIN;
 
     return (
         <>

@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
+    session: {strategy: 'jwt'},
     providers: [
         CredentialsProvider({
             name: 'Email & Password',
@@ -40,27 +41,30 @@ export const authOptions: NextAuthOptions = {
 
         // …you can drop in OAuth providers here (Google, GitHub, etc.)…
     ],
+
+
     callbacks: {
-       // 1️⃣ Stash id, role **and** isAdmin on the token
-        async jwt({token, user}) {
+        // 1️⃣ Stash id, role **and** isAdmin on the token
+        async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
                 token.role = user.role;
-                token.isAdmin = user.role === 'ADMIN';
             }
             return token;
         },
         // 2️⃣ Merge everything into session.user
         async session({session, token}) {
-            if (session.user) {
-                session.user.id = token.id as string;
-                session.user.role = token.role as 'USER' | 'ADMIN';
-                session.user.isAdmin = token.isAdmin as boolean;
+
+            if (token && session.user) {
+                 session.user.id = token.id as string;
+                 session.user.role    = token.role  as "USER" | "ADMIN";
+                 session.user.isAdmin = token.role === 'ADMIN';
             }
+
             return session;
         },
     },
 
     secret: process.env.NEXTAUTH_SECRET,
-    pages: { signIn: '/auth/signin' }
+    pages: {signIn: '/auth/signin'}
 }

@@ -35,9 +35,16 @@ interface NavBarClientProps {
   links: NavLink[]
 }
 
-export default function NavBarClient({ session, links }: NavBarClientProps) {
-  const { status } = useSession()
+export default function NavBarClient({ session: initialSession, links,  }: NavBarClientProps) {
   const isMobile = useMediaQuery('(max-width: 768px)')
+
+  const { data: session, status } = useSession()
+  const effectiveSession = session ?? initialSession;
+
+  // Use effectiveSession everywhere
+  const isLoggedIn = !!effectiveSession?.user;
+
+
 
   // Desktop navigation items
   const DesktopNav: React.FC<{ links: NavLink[] }> = ({ links }) => (
@@ -100,9 +107,9 @@ export default function NavBarClient({ session, links }: NavBarClientProps) {
         <Flex align="center" gap="4">
           {status === 'loading' ? (
             <Text>Loading…</Text>
-          ) : session ? (
+          ) : isLoggedIn ? (
             <>
-              <Text size="3">Hi, {session.user?.name ?? 'Coach'}</Text>
+              <Text size="3">Hi, {effectiveSession.user?.name ?? 'Coach'}</Text>
               <Button variant="ghost" size="2" onClick={() => signOut()}>
                 Sign Out
               </Button>

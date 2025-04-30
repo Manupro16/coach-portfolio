@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import {Box, Flex, Heading} from '@radix-ui/themes'
 import {

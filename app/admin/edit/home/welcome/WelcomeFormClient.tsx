@@ -2,10 +2,9 @@
 
 import EditForm, {type FieldConfig, type FieldKind} from "@/app/admin/edit/components/EditForm";
 import {WelcomeInput} from '@/app/admin/edit/home/welcome/page'
-import TextField from '@/app/admin/edit/components/TextField'
-import DynamicReactMDEditor from '@/app/admin/edit/components/DynamicReactMDEditor'
-import ImageUpload from '@/app/admin/edit/components/imageUpload'
+import { TextFieldRenderer, MarkdownRenderer, ImageRenderer } from '@/app/admin/edit/components/renderers'
 import React from "react";
+import {Box} from "@radix-ui/themes";
 
 
 //
@@ -24,9 +23,9 @@ const welcomeFields: FieldConfig<WelcomeInput>[] = [
 // 2) Map each kind to your UI component
 //
 const COMPONENT_MAP: Record<FieldKind, React.FC<any>> = {
-    text: TextField,
-    markdown: DynamicReactMDEditor,
-    image: ImageUpload,
+    text: TextFieldRenderer,
+    markdown: MarkdownRenderer,
+    image: ImageRenderer,
 }
 
 
@@ -38,7 +37,7 @@ interface Props {
 
 function WelcomeFormClient({initialData, onSubmitAction}: Props) {
     return (
-        <EditForm<WelcomeInput>
+            <EditForm<WelcomeInput>
             fields={welcomeFields}
             componentMap={COMPONENT_MAP}
             initialData={initialData}

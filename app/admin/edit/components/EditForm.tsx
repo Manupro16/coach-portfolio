@@ -9,6 +9,7 @@ import {
     type UseFormSetValue,
     type FieldErrors,
     type DefaultValues,
+    Path,
 } from 'react-hook-form'
 
 
@@ -17,7 +18,7 @@ export type FieldKind = 'text' | 'markdown' | 'image'
 
 export interface FieldConfig<T> {
     kind: FieldKind
-    name: Extract<keyof T, string>
+    name: Path<T>
     label: string
     defaultValue?: T[keyof T]
 }
@@ -58,7 +59,7 @@ export default function EditForm<T extends Record<string, unknown>>({
     } = useForm<T>({defaultValues: initialData})
 
     return (
-        <Flex justify="center" className="w-full h-full">
+        <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">
             <Box
                 className={`shadow-md rounded-lg p-8 w-full max-w-3xl ${colorMode === 'dark' ? 'bg-gray-900' : 'bg-gray-700'}`}>
                 <Heading size="4" className="text-2xl font-semibold text-green-500 mb-4">
@@ -91,5 +92,6 @@ export default function EditForm<T extends Record<string, unknown>>({
                 </form>
             </Box>
         </Flex>
+
     )
 }

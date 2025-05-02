@@ -1,16 +1,17 @@
 'use client'
 import type {FieldConfig} from './EditForm'
-import type {
+import {
     UseFormRegister,
     Control,
     UseFormSetValue,
     FieldErrors, FieldValues, PathValue,
-    Path
+    Path, useWatch, Controller
 } from 'react-hook-form'
 
 import TextField from './TextField'
 import DynamicReactMDEditor from './DynamicReactMDEditor'
 import ImageUpload from './imageUpload'
+import ImagePreview from "@/app/admin/edit/components/imagePreview";
 
 type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
@@ -23,30 +24,44 @@ type RendererProps<T extends FieldValues> = {
 
 // 1) Text fields…
 export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {field, register, errors, colorMode} = props
+    const {field, register, errors, colorMode, control} = props
     return (
-        <TextField
-            id={field.name}
-            label={field.label}
-            value={(field.defaultValue as string) || ''}
-            fieldType="text"
-            placeHolder=""
-            colorMode={colorMode}
-            errors={errors}
-            {...register(field.name as any, {required: true})}
+        <Controller
+            control={control}
+            name={field.name as Path<T>}
+            defaultValue={'' as any}
+            render={({field: controllerField}) => (
+                <TextField
+                    id={field.name}
+                    label={field.label}
+                    fieldType="text"
+                    placeHolder=""
+                    errors={errors}
+                    colorMode={colorMode}
+                    {...controllerField}
+                />
+            )
+            }
         />
     )
 }
 
 // 2) Markdown…
-export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {field, setValue, colorMode} = props
+export function MarkdownRenderer<T extends FieldValues>({
+                                                            field, control, errors, colorMode
+                                                        }: RendererProps<T>) {
     return (
-        <DynamicReactMDEditor
-            value={(field.defaultValue as string) || ''}
-            onChange={(newValue) => setValue(field.name, newValue as PathValue<T, typeof field.name>
+        <Controller<T, Path<T>>
+            control={control}
+            name={field.name as Path<T>}
+            defaultValue={'' as any}
+            render={({field: controllerField}) => (
+                <DynamicReactMDEditor
+                    value={controllerField.value}
+                    onChange={controllerField.onChange}
+                    colorMode={colorMode}
+                />
             )}
-            colorMode={colorMode}
         />
     )
 }
@@ -55,14 +70,39 @@ export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>)
 // 3) Image upload…
 export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
     const {control, setValue, errors, colorMode, field} = props
+
+    // watch the preview URL (stored in imageSrc)
+    const imagePreviewUrl = useWatch({
+        control,
+        name: 'imageSrc' as Path<T>,  // must match your previewName
+    }) as string | undefined
+
+    const rawError = errors[field.name]?.message
+    const imageError =
+        typeof rawError === 'string'
+            ? rawError
+            : rawError instanceof Array
+                ? rawError.join(', ')
+                : rawError
+                    ? String(rawError)
+                    : null
+
+
     return (
-        <ImageUpload
-            name={field.name as Path<T>}
-            previewName={'imageSrc' as Path<T>}
-            control={control}
-            setValue={setValue}
-            errors={errors}
-            colorMode={colorMode}
-        />
+        <>
+            <ImageUpload
+                name={field.name as Path<T>}
+                previewName={'imageSrc' as Path<T>}
+                control={control}
+                setValue={setValue}
+                errors={errors}
+                colorMode={colorMode}
+            />
+            <ImagePreview
+                imagePreviewUrl={imagePreviewUrl}
+                imageError={imageError}
+                colorMode={colorMode}
+            />
+        </>
     )
 }

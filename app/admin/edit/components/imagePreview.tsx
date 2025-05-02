@@ -2,6 +2,7 @@
 
 import { Box, Text } from "@radix-ui/themes";
 import React from "react";
+import Image from "next/image";
 
 interface ImagePreviewProps {
   imageError?: string | null;

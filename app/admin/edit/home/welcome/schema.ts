@@ -12,7 +12,7 @@ export const welcomeSchema = z.object({
                       .refine(files => !files || files.length === 1, 'Pick exactly one file')
                       .optional(),
   imageTitle:      z.string().optional(),
-  updatedAt:       z.string().optional(),  // if you keep it in the payload
+  updatedAt:       z.date().optional(),  // if you keep it in the payload
 })
 
 // TypeScript type inferred automatically:

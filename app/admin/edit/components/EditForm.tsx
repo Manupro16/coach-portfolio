@@ -11,6 +11,9 @@ import {
     type DefaultValues,
     Path,
 } from 'react-hook-form'
+import type { Resolver } from 'react-hook-form'
+
+
 
 
 // Shared types:
@@ -40,10 +43,12 @@ interface EditFormProps<T extends Record<string, unknown>> {
     initialData: DefaultValues<T>
     onSubmit: (values: T) => Promise<void>
     title?: string
+    resolver?: Resolver<T>
 }
 
 export default function EditForm<T extends Record<string, unknown>>({
                                                                         fields,
+                                                                        resolver,
                                                                         componentMap,
                                                                         initialData,
                                                                         onSubmit,
@@ -56,7 +61,7 @@ export default function EditForm<T extends Record<string, unknown>>({
         control,
         setValue,
         formState: {errors, isSubmitting},
-    } = useForm<T>({defaultValues: initialData})
+    } = useForm<T>({defaultValues: initialData, resolver })
 
     return (
         <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">

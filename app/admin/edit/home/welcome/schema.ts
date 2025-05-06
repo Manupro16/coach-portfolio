@@ -2,18 +2,16 @@
 import { z } from 'zod'
 
 export const welcomeSchema = z.object({
-  title:           z.string().min(1, 'Title is required'),
-  subtitle:        z.string().optional(),
-  contentTitle:    z.string().optional(),
-  contentSubtitle: z.string().min(1, 'Content is required'),
-  imageSrc:        z.string().url().optional(),
-  imageFile:       z
-                      .any()
-                      .refine(files => !files || files.length === 1, 'Pick exactly one file')
-                      .optional(),
-  imageTitle:      z.string().optional(),
-  updatedAt:       z.date().optional(),  // if you keep it in the payload
+  title: z.string().min(1, 'Title is required'),
+  subtitle: z.string().min(1, 'Subtitle is required'),
+  contentTitle: z.string().min(1, 'Content title is required'),
+  contentSubtitle: z.string().min(1, 'Content subtitle is required'),
+  imageTitle: z.string().min(1, 'Image title is required'),
+  imageFile: z
+    .any()
+    .refine(f => !f || (Array.isArray(f) && f.length === 1), 'Pick exactly one file')
+    .optional(),
 })
 
-// TypeScript type inferred automatically:
-export type WelcomeInput = z.infer<typeof welcomeSchema>
+// The TypeScript type produced by that schema
+export type zodWelcomeInput = z.infer<typeof welcomeSchema>

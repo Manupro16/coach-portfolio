@@ -11,9 +11,8 @@ import {
     type DefaultValues,
     Path,
 } from 'react-hook-form'
-import type { Resolver } from 'react-hook-form'
-
-
+import type {Resolver} from 'react-hook-form'
+import clsx from "clsx";
 
 
 // Shared types:
@@ -60,8 +59,8 @@ export default function EditForm<T extends Record<string, unknown>>({
         handleSubmit,
         control,
         setValue,
-        formState: {errors, isSubmitting},
-    } = useForm<T>({defaultValues: initialData, resolver: resolver, mode: 'onChange', reValidateMode: 'onChange' })
+        formState: {errors, isSubmitting, isValid},
+    } = useForm<T>({defaultValues: initialData, resolver: resolver, mode: 'onChange', reValidateMode: 'onChange'})
 
     return (
         <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">
@@ -89,8 +88,13 @@ export default function EditForm<T extends Record<string, unknown>>({
 
                     <button
                         type="submit"
-                        disabled={isSubmitting}
-                        className="mt-6 px-4 py-2 bg-primary text-white rounded"
+                        disabled={isSubmitting || isValid}
+                        className={clsx(
+                            'mt-6 px-4 py-2 rounded text-white',
+                            (isSubmitting || !isValid)
+                                ? 'bg-gray-500 cursor-not-allowed'
+                                : 'bg-primary hover:bg-primary/90',
+                        )}
                     >
                         {isSubmitting ? 'Saving…' : 'Save'}
                     </button>

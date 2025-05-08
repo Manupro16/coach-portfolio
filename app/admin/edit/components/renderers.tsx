@@ -4,7 +4,7 @@ import {
     UseFormRegister,
     Control,
     UseFormSetValue,
-    FieldErrors, FieldValues, PathValue,
+    FieldErrors, FieldValues,
     Path, useWatch, Controller
 } from 'react-hook-form'
 
@@ -24,7 +24,7 @@ type RendererProps<T extends FieldValues> = {
 
 // 1) Text fields…
 export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {field, register, errors, colorMode, control} = props
+    const {field, errors, colorMode, control} = props
     return (
         <Controller
             control={control}
@@ -38,6 +38,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
                     placeHolder=""
                     errors={errors}
                     colorMode={colorMode}
+                    errorKey={field.name as string}
                     {...controllerField}
                 />
             )
@@ -48,7 +49,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
 
 // 2) Markdown…
 export function MarkdownRenderer<T extends FieldValues>({
-                                                            field, control, errors, colorMode
+                                                            field, control, colorMode
                                                         }: RendererProps<T>) {
     return (
         <Controller<T, Path<T>>

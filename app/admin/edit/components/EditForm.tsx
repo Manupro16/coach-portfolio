@@ -12,6 +12,7 @@ import {
     Path,
 } from 'react-hook-form'
 import type { Resolver } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 
 
@@ -61,7 +62,7 @@ export default function EditForm<T extends Record<string, unknown>>({
         control,
         setValue,
         formState: {errors, isSubmitting},
-    } = useForm<T>({defaultValues: initialData, resolver })
+    } = useForm<T>({defaultValues: initialData, resolver: resolver, mode: 'onChange', reValidateMode: 'onChange' })
 
     return (
         <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">

@@ -88,7 +88,7 @@ export default function EditForm<T extends Record<string, unknown>>({
 
                     <button
                         type="submit"
-                        disabled={isSubmitting || isValid}
+                        disabled={isSubmitting || !isValid}
                         className={clsx(
                             'mt-6 px-4 py-2 rounded text-white',
                             (isSubmitting || !isValid)

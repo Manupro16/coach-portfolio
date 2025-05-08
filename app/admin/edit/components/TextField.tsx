@@ -1,6 +1,6 @@
 import {Box, Heading, Text, TextField} from "@radix-ui/themes";
 import clsx from 'clsx';
-import type { FieldErrors } from 'react-hook-form'
+import type {FieldErrors} from 'react-hook-form'
 
 interface TextFieldsProps {
     id?: string;
@@ -22,6 +22,7 @@ function TextFields({
                         fieldType,
                         placeHolder,
                         errorKey,
+                        ...rest
                     }: TextFieldsProps) {
     const inputId = id || label.toLowerCase().replace(/\s+/g, '-');
     const inputClasses = clsx(
@@ -40,9 +41,11 @@ function TextFields({
             <TextField.Root
                 id={inputId}
                 type={fieldType}
-                placeholder={placeHolder}
                 defaultValue={value}
+                placeholder={placeHolder}
                 className={inputClasses}
+                {...rest}
+
             />
             {errors[keyToCheck] && (
                 <Text as="p" className="text-red-500 mt-2">

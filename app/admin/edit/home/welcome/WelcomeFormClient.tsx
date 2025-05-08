@@ -14,7 +14,7 @@ const welcomeFields: FieldConfig<zodWelcomeInput>[] = [
     {kind: 'text', name: 'title', label: 'Main Title'},
     {kind: 'text', name: 'subtitle', label: 'Subtitle'},
     {kind: 'text', name: 'contentTitle', label: 'Section Heading'},
-    {kind: 'markdown', name: 'contentSubtitle', label: 'Body Text'},
+    {kind: 'markdown', name: 'contentSubtitle', label: 'Section Body Text'},
     {kind: 'text', name: 'imageTitle', label: 'Image Alt Text'},  // new
     {kind: 'image', name: 'imageFile', label: 'Hero Image'},
 ]

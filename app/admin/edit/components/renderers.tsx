@@ -48,9 +48,10 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
 }
 
 // 2) Markdown…
-export function MarkdownRenderer<T extends FieldValues>({
-                                                            field, control, colorMode
-                                                        }: RendererProps<T>) {
+export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>) {
+
+    const { control, field, colorMode, errors } = props
+
     return (
         <Controller<T, Path<T>>
             control={control}
@@ -61,6 +62,9 @@ export function MarkdownRenderer<T extends FieldValues>({
                     value={controllerField.value}
                     onChange={controllerField.onChange}
                     colorMode={colorMode}
+                    label={field.label}
+                    errors={errors}
+                    errorKey={field.name as string}
                 />
             )}
         />

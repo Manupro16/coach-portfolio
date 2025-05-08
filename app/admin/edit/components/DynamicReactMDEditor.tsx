@@ -3,9 +3,11 @@
 'use client'; // Ensure this component is treated as a client-side component
 
 import React from 'react';
-import MDEditor from '@uiw/react-md-editor';
 import {Box, Heading, Text} from '@radix-ui/themes';
 import type {FieldErrors} from "react-hook-form";
+import dynamic from "next/dynamic";
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false }) // 👈
 
 interface DynamicReactMDEditorProps {
     value: string;

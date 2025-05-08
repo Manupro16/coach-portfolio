@@ -29,7 +29,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
         <Controller
             control={control}
             name={field.name as Path<T>}
-            defaultValue={'' as any}
+            defaultValue={field.defaultValue}
             render={({field: controllerField}) => (
                 <TextField
                     id={field.name}

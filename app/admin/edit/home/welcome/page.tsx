@@ -3,9 +3,9 @@ import React from "react";
 import {WelcomeContent} from "@prisma/client";
 import WelcomeFormClient from "@/app/admin/edit/home/welcome/WelcomeFormClient";
 import {type zodWelcomeInput, welcomeSchema} from "@/app/admin/edit/home/welcome/schema";
-import {NextResponse} from "next/server";
-import {cloudinary, CloudinaryUploadResponse} from "@/lib/cloudinary";
-import {z} from "zod";
+import {cloudinary} from "@/lib/cloudinary";
+import {revalidatePath} from "next/cache";
+import {redirect} from "next/navigation";
 
 
 // Pull in everything you need from the DB + any file‐upload field:
@@ -24,29 +24,47 @@ export type WelcomeInput = Pick<
 
 
 // 1) Server Action
-export async function onSubmitAction(values: zodWelcomeInput) {
+export async function onSubmitAction(raw: zodWelcomeInput) {
     'use server'
-    const title = values.title
-    const subtitle = values.subtitle
-    const contentTitle = values.contentTitle
-    const contentSubtitle = values.contentSubtitle
-    const imageSrc = values.imageSrc
-    const imageTitle = values.imageTitle
-    const imageFile = values.imageFile instanceof File
 
-      const result = welcomeSchema.safeParse({
-                title,
-                subtitle,
-                contentTitle,
-                contentSubtitle,
-                imageTitle,
-            });
+    // ① validate once
+    const data = welcomeSchema.parse(raw)
 
-    if (!result.success) {
-        return
+    // ② handle optional image
+    let imageSrc = data.imageSrc
+    const file = data.imageFile?.[0]
 
+    if (file) {
+        const ALLOWED = ['image/jpeg', 'image/png', 'image/webp']
+        if (!ALLOWED.includes(file.type)) throw new Error('Invalid file type')
+        if (file.size > 5 * 1024 * 1024) throw new Error('File exceeds 5 MB')
+
+        const buffer = Buffer.from(await file.arrayBuffer())
+        const base64 = buffer.toString('base64')
+        const dataUri = `data:${file.type};base64,${base64}`
+        const upload = await cloudinary.uploader.upload(dataUri, {
+            folder: 'section-welcome',
+            overwrite: true,
+        })
+        imageSrc = upload.secure_url
     }
 
+    // ③ write everything in a single Prisma update
+    await prisma.welcomeContent.update({
+        where: {id: 1},           // adjust to your PK
+        data: {
+            title: data.title,
+            subtitle: data.subtitle,
+            contentTitle: data.contentTitle,
+            contentSubtitle: data.contentSubtitle,
+            imageTitle: data.imageTitle,
+            imageSrc,                        // new or existing URL
+            updatedAt: new Date(),
+        },
+    })
+
+    revalidatePath('/')
+     redirect('/')
 }
 
 

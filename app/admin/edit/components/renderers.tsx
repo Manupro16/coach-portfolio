@@ -12,6 +12,8 @@ import TextField from './TextField'
 import DynamicReactMDEditor from './DynamicReactMDEditor'
 import ImageUpload from './imageUpload'
 import ImagePreview from "@/app/admin/edit/components/imagePreview";
+import VideoUpload from "@/app/admin/edit/components/VideoUploud";
+import VideoPreview from "@/app/admin/edit/components/VideoPreview";
 
 type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
@@ -125,21 +127,20 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
     const videoError = typeof rawError === 'string' ? rawError : rawError ? String(rawError) : null;
 
     return (
-        // <>
-        //     <VideoUpload
-        //         name={field.name as Path<T>}
-        //         previewName={'videoSrc' as Path<T>}
-        //         control={control}
-        //         setValue={setValue}
-        //         errors={errors}
-        //         colorMode={colorMode}
-        //     />
-        //     <VideoPreview
-        //         videoPreviewUrl={videoPreviewUrl}
-        //         videoError={videoError}
-        //         colorMode={colorMode}
-        //     />
-        // </>
-        <div>hello</div>
+        <>
+            <VideoUpload
+                name={field.name as Path<T>}
+                previewName={'videoSrc' as Path<T>}
+                control={control}
+                setValue={setValue}
+                errors={errors}
+                colorMode={colorMode}
+            />
+            <VideoPreview
+                videoPreviewUrl={videoPreviewUrl}
+                videoError={videoError}
+                colorMode={colorMode}
+            />
+        </>
     );
 }

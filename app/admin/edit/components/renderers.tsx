@@ -111,3 +111,35 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
         </>
     )
 }
+
+
+export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
+    const { control, setValue, errors, colorMode, field } = props;
+
+    const videoPreviewUrl = useWatch({
+        control,
+        name: 'videoSrc' as Path<T>,
+    }) as string | undefined;
+
+    const rawError = errors[field.name]?.message;
+    const videoError = typeof rawError === 'string' ? rawError : rawError ? String(rawError) : null;
+
+    return (
+        // <>
+        //     <VideoUpload
+        //         name={field.name as Path<T>}
+        //         previewName={'videoSrc' as Path<T>}
+        //         control={control}
+        //         setValue={setValue}
+        //         errors={errors}
+        //         colorMode={colorMode}
+        //     />
+        //     <VideoPreview
+        //         videoPreviewUrl={videoPreviewUrl}
+        //         videoError={videoError}
+        //         colorMode={colorMode}
+        //     />
+        // </>
+        <div>hello</div>
+    );
+}

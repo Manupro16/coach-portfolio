@@ -56,7 +56,7 @@ export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>)
         <Controller<T, Path<T>>
             control={control}
             name={field.name as Path<T>}
-            defaultValue={'' as any}
+            defaultValue={field.defaultValue}
             render={({field: controllerField}) => (
                 <DynamicReactMDEditor
                     value={controllerField.value}

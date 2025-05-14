@@ -3,22 +3,38 @@ import {Button, Flex, Grid, Heading, Link, Text} from "@radix-ui/themes";
 import VideoCard from "@/app/components/home/components/VideoCard";
 import {TopWave, BottomWave} from '@/app/components/svgWaves';
 import {prisma} from '@/lib/prisma';
+import {FaPencilAlt} from "react-icons/fa";
+import {getServerSession} from "next-auth/next";
+import {authOptions} from "@/lib/auth";
+import {Role} from "@prisma/client";
+
 
 async function ShowCaseSection() {
 
-    const data = await prisma.showcaseVideo.findMany({
+    // const data = await prisma.showcaseVideo.findMany({
+    //         orderBy: {
+    //             createdAt: "desc"
+    //         }
+    //     }
+    // )
+
+    const [data, session] = await Promise.all([
+        prisma.showcaseVideo.findMany({
             orderBy: {
                 createdAt: "desc"
             }
-        }
-    )
+        }),
+        getServerSession(authOptions)
+    ])
+
+    const isAdmin = session?.user.role === Role.ADMIN;
 
     return (
         <>
             <TopWave/>
             <Grid
                 as="div"
-                className="py-8 px-4 sm:px-6 lg:px-8 pt-12"
+                className="relative py-8 px-4 sm:px-6 lg:px-8 pt-12"
                 columns={{initial: '1'}}
                 rows="auto"
                 gap={{initial: '4', md: "9"}}
@@ -37,6 +53,12 @@ async function ShowCaseSection() {
                         An introduction to the history of Chuy Vera&#39;s amazing soccer career. This showcase provides
                         you with clips of his teams in each season and his impact on the club.
                     </Text>
+                    {isAdmin && (
+                        <Link href="/admin/edit/home/showcase" aria-label="Edit welcome section">
+                            <FaPencilAlt
+                                className="w-5 h-5 text-textLight hover:text-primary transition-colors ml-5"/>
+                        </Link>
+                    )}
                 </Flex>
                 {/*Video Cards Section */}
                 <Flex
@@ -79,23 +101,23 @@ async function ShowCaseSection() {
 export default ShowCaseSection
 
 
-    // const showcases = [
-    //     {
-    //         team: 'Zamora FC Venezuela',
-    //         season: '2010/2011',
-    //         videoSrc: '/videos/zamora_2010.mp4',
-    //         description: 'Highlights from the 2010/2011 season.',
-    //     },
-    //     {
-    //         team: 'Estudiantes de Mérida',
-    //         season: '2012/2013',
-    //         videoSrc: '/videos/estudiantes_2012.mp4',
-    //         description: 'Key moments from the 2012/2013 season.',
-    //     },
-    //     {
-    //         team: 'Deportivo Táchira',
-    //         season: '2014/2015',
-    //         videoSrc: '/videos/tachira_2014.mp4',
-    //         description: 'Memorable plays from the 2014/2015 season.',
-    //     },
-    // ];
+// const showcases = [
+//     {
+//         team: 'Zamora FC Venezuela',
+//         season: '2010/2011',
+//         videoSrc: '/videos/zamora_2010.mp4',
+//         description: 'Highlights from the 2010/2011 season.',
+//     },
+//     {
+//         team: 'Estudiantes de Mérida',
+//         season: '2012/2013',
+//         videoSrc: '/videos/estudiantes_2012.mp4',
+//         description: 'Key moments from the 2012/2013 season.',
+//     },
+//     {
+//         team: 'Deportivo Táchira',
+//         season: '2014/2015',
+//         videoSrc: '/videos/tachira_2014.mp4',
+//         description: 'Memorable plays from the 2014/2015 season.',
+//     },
+// ];

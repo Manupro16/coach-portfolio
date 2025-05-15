@@ -1,6 +1,5 @@
 import {prisma} from '@/lib/prisma'
 import React from "react";
-import {WelcomeContent} from "@prisma/client";
 import WelcomeFormClient from "@/app/admin/edit/home/welcome/WelcomeFormClient";
 import {type zodWelcomeInput, welcomeSchema} from "@/app/admin/edit/home/welcome/schema";
 import {cloudinary} from "@/lib/cloudinary";
@@ -8,19 +7,7 @@ import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 
 
-// Pull in everything you need from the DB + any file‐upload field:
-export type WelcomeInput = Pick<
-    WelcomeContent,
-    | 'title'
-    | 'subtitle'
-    | 'contentTitle'
-    | 'contentSubtitle'
-    | 'imageSrc'
-    | 'imageTitle'    // new field
-    | 'updatedAt'     // meta‐field
-> & {
-    imageFile?: FileList
-}
+
 
 
 // 1) Server Action

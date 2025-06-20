@@ -26,6 +26,7 @@ const COMPONENT_MAP: Record<FieldKind, React.FC<any>> = {
     text: TextFieldRenderer,
     markdown: MarkdownRenderer,
     image: ImageRenderer,
+    video: () => null
 }
 
 

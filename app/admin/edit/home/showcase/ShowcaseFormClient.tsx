@@ -3,8 +3,8 @@
 import {showcaseSchema, zodShowcaseInput} from "@/app/admin/edit/home/showcase/schema";
 import EditForm, {FieldConfig, FieldKind} from "@/app/admin/edit/components/EditForm";
 import React from "react";
-import {ImageRenderer, MarkdownRenderer, TextFieldRenderer} from "@/app/admin/edit/components/renderers";
-import VideoUpload from "@/app/admin/edit/components/VideoUploud";
+import {ImageRenderer, MarkdownRenderer, TextFieldRenderer, VideoRenderer} from "@/app/admin/edit/components/renderers";
+
 import {zodResolver} from "@hookform/resolvers/zod";
 
 
@@ -19,7 +19,7 @@ const COMPONENT_MAP: Record<FieldKind, React.FC<any>> = {
     text: TextFieldRenderer,
     markdown: MarkdownRenderer,
     image: ImageRenderer,
-    video: VideoUpload,
+    video: VideoRenderer,
 }
 
 

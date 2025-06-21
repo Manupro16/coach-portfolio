@@ -2,6 +2,7 @@
 
 import { Box, Text } from '@radix-ui/themes';
 import React from 'react';
+import CloudinaryVideo from "@/app/components/CloudinaryVideo";
 
 interface VideoPreviewProps {
     videoError?: string | null;
@@ -36,10 +37,7 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ videoError, videoPreviewUrl
 
     return (
         <Box className="relative w-full max-w-md h-64 rounded-md shadow-sm overflow-hidden">
-            <video controls className="w-full h-full object-cover rounded">
-                <source src={videoPreviewUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+            <CloudinaryVideo src={videoPreviewUrl} width="1920" height="1080" controls poster="auto" />
         </Box>
     );
 };

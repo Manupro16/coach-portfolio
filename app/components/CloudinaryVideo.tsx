@@ -4,7 +4,7 @@
 import { CldVideoPlayer } from 'next-cloudinary';
 import 'next-cloudinary/dist/cld-video-player.css';
 
-export default function Demo() {
+export default function CloudinaryVideo() {
   return (
     <CldVideoPlayer
       width="1920"

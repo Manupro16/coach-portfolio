@@ -2,8 +2,7 @@ import {prisma} from '@/lib/prisma';
 import {type zodShowcaseInput} from "@/app/admin/edit/home/showcase/schema";
 import React from "react";
 import ShowcaseFormClient from "@/app/admin/edit/home/showcase/ShowcaseFormClient";
-
-
+import {zodWelcomeInput} from "@/app/admin/edit/home/welcome/schema";
 
 
 export async function onSubmitAction(raw: any) {
@@ -14,27 +13,23 @@ export async function onSubmitAction(raw: any) {
 
 
 async function EditShowcaseSection() {
-    const record = await prisma.showcaseVideo.findFirst()
-    if (!record) throw new Error('No welcome section found')
+    const records = await prisma.showcaseVideo.findMany()
 
+    if (records.length === 0)
+        throw new Error('No showcase videos found');
 
-    const initialData: zodShowcaseInput = {
-        team: record.team,
-        season: record.season,
-        date: record.date,
-        videoSrc: record.videoSrc,
-        description: record.description,
-        updatedAt: record.updatedAt,
-    }
-
-    if (!initialData) {
-        return <p className="p-8 text-center">Loading…</p>
-    }
+    const initialData: zodShowcaseInput[] = records.map((r) => ({
+        team: r.team,
+        season: r.season,
+        date: r.date,
+        videoSrc: r.videoSrc,
+        description: r.description,
+        updatedAt: r.updatedAt,
+    }))
 
     return (
         <ShowcaseFormClient initialData={initialData} onSubmitAction={onSubmitAction} />
     )
-
 
 
 }

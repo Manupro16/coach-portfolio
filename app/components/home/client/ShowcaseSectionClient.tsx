@@ -40,11 +40,6 @@ export default function ShowcaseSectionClient({ data, session }: Props) {
           This showcase provides you with clips of his teams in each season and
           his impact on the club.
         </Text>
-        {isAdmin && (
-          <Link href="/admin/edit/home/showcase" aria-label="Edit welcome section">
-            <FaPencilAlt className="w-5 h-5 text-textLight hover:text-primary transition-colors ml-5" />
-          </Link>
-        )}
       </Flex>
 
       {/* Video Cards Section */}
@@ -61,7 +56,7 @@ export default function ShowcaseSectionClient({ data, session }: Props) {
           className="w-full"
         >
           {data.map((item, index) => (
-            <VideoCard key={index} {...item} />
+            <VideoCard key={index}  {...item} isAdmin={isAdmin} />
           ))}
         </Grid>
       </Flex>

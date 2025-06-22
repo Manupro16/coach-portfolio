@@ -16,8 +16,9 @@ interface PageProps {
 
 
 async function EditShowcaseSection({params}: PageProps) {
+    const numericId = Number(params.id);
     const record = await prisma.showcaseVideo.findUnique({
-        where: {id: parseInt(params.id)},
+        where: {id: numericId},
     });
 
     if (!record) throw new Error('Video not found');

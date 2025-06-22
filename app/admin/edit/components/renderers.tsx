@@ -52,7 +52,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
 // 2) Markdown…
 export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>) {
 
-    const { control, field, colorMode, errors } = props
+    const {control, field, colorMode, errors} = props
 
     return (
         <Controller<T, Path<T>>
@@ -116,7 +116,7 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
 
 
 export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const { control, setValue, errors, colorMode, field } = props;
+    const {control, setValue, errors, colorMode, field} = props;
 
     const videoPreviewUrl = useWatch({
         control,
@@ -144,3 +144,25 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
         </>
     );
 }
+
+export function DateRenderer<T extends FieldValues>({ field, control, errors, colorMode }: RendererProps<T>) {
+    return (
+        <Controller<T, Path<T>>
+            control={control}
+            name={field.name as Path<T>}
+            defaultValue={field.defaultValue}
+            render={({field: controllerField}) => (
+                <TextField
+                    {...controllerField}
+                    id={field.name}
+                    label={field.label}
+                    fieldType="date"      // ← native date picker
+                    placeHolder=""
+                    errors={errors}
+                    colorMode={colorMode}
+                />
+            )}
+        />
+    );
+}
+

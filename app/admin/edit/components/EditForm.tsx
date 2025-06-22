@@ -16,7 +16,7 @@ import clsx from "clsx";
 
 
 // Shared types:
-export type FieldKind = 'text' | 'markdown' | 'image' | 'video'
+export type FieldKind = 'text' | 'markdown' | 'image' | 'video' | 'date'
 
 export interface FieldConfig<T> {
     kind: FieldKind

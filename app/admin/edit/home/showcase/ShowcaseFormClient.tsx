@@ -3,7 +3,14 @@
 import {showcaseSchema, zodShowcaseInput} from "@/app/admin/edit/home/showcase/schema";
 import EditForm, {FieldConfig, FieldKind} from "@/app/admin/edit/components/EditForm";
 import React from "react";
-import {ImageRenderer, MarkdownRenderer, TextFieldRenderer, VideoRenderer, type RendererProps} from "@/app/admin/edit/components/renderers";
+import {
+    ImageRenderer,
+    MarkdownRenderer,
+    TextFieldRenderer,
+    VideoRenderer,
+    type RendererProps,
+    DateRenderer
+} from "@/app/admin/edit/components/renderers";
 
 import {zodResolver} from "@hookform/resolvers/zod";
 
@@ -13,6 +20,7 @@ const showcaseField: FieldConfig<zodShowcaseInput>[] = [
     {kind: 'text', name: 'season', label: 'Season Year'},
     {kind: 'text', name: 'description', label: 'Description of the game'},
     {kind: 'video', name: 'videoFile', label: 'Video Source?'},
+    { kind: 'date',  name: 'date', label: 'Match Date' }, // ← new
 ]
 
 type ShowcaseRenderer = React.FC<RendererProps<zodShowcaseInput>>
@@ -22,6 +30,7 @@ const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     markdown: MarkdownRenderer,
     image: ImageRenderer,
     video: VideoRenderer,
+    date: DateRenderer,
 }
 
 

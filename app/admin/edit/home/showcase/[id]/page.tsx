@@ -68,7 +68,7 @@ async function EditShowcaseSection({params}: PageProps) {
         id: record.id,
         team: record.team,
         season: record.season,
-        date: record.date,
+        date: record.date.toISOString().split('T')[0],
         videoSrc: record.videoSrc,
         description: record.description,
         updatedAt: record.updatedAt,

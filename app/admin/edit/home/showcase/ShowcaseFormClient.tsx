@@ -12,7 +12,7 @@ const showcaseField: FieldConfig<zodShowcaseInput>[] = [
     {kind: 'text', name: 'team', label: 'Team Name'},
     {kind: 'text', name: 'season', label: 'Season Year'},
     {kind: 'text', name: 'description', label: 'Description of the game'},
-    {kind: 'video', name: 'videoSrc', label: 'Video Source?'},
+    {kind: 'video', name: 'videoFile', label: 'Video Source?'},
 ]
 
 const COMPONENT_MAP: Record<FieldKind, React.FC<any>> = {

@@ -29,14 +29,9 @@ export async function onSubmitAction(raw: zodShowcaseInput) {
 
     let videoUrl = data.videoSrc; // keep existing by default
 
-    if (data.videoFile && data.videoFile.length > 0) {
-        // FileList (client) -> File[] (server)
-        const file: File =
-            data.videoFile instanceof FileList
-                ? data.videoFile[0]
-                : (data.videoFile as unknown as File[])[0];
-
-        videoUrl = await uploadVideo(file);
+    if (data.videoFile && Array.isArray(data.videoFile) && data.videoFile.length > 0) {
+        const file = data.videoFile[0];
+        videoUrl = await uploadVideo(file)
     }
 
     await prisma.showcaseVideo.update({

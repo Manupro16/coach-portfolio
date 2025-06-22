@@ -129,7 +129,7 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
     return (
         <>
             <VideoUpload
-                name={field.name as Path<T>}
+                name={"videoFile" as Path<T>}
                 previewName={'videoSrc' as Path<T>}
                 control={control}
                 setValue={setValue}

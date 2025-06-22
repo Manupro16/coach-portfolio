@@ -145,24 +145,43 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
     );
 }
 
+function toInputValue(value: unknown): string {
+    if (!value) return '';
+
+    const d =
+        typeof value === 'string' ? new Date(value) :
+            value instanceof Date ? value :
+                new Date(String(value));
+
+    return Number.isNaN(d.valueOf())       // invalid date guard
+        ? ''
+        : d.toISOString().slice(0, 10);      // "YYYY-MM-DD"
+}
+
+
 export function DateRenderer<T extends FieldValues>({ field, control, errors, colorMode }: RendererProps<T>) {
     return (
         <Controller<T, Path<T>>
             control={control}
             name={field.name as Path<T>}
             defaultValue={field.defaultValue}
-            render={({field: controllerField}) => (
-                <TextField
-                    {...controllerField}
-                    id={field.name}
-                    label={field.label}
-                    fieldType="date"      // ← native date picker
-                    placeHolder=""
-                    errors={errors}
-                    colorMode={colorMode}
-                />
-            )}
+            render={({field: controllerField}) => {
+
+                return (
+                    <TextField
+                        {...controllerField}
+                        id={field.name}
+                        label={field.label}
+                        fieldType="date"
+                        placeHolder=""
+                        errors={errors}
+                        colorMode={colorMode}
+                        value={toInputValue(controllerField.value)}
+                    />
+                );
+            }}
         />
     );
 }
+
 

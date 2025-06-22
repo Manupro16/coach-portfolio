@@ -11,14 +11,14 @@ export async function onSubmitAction(raw: any) {
 }
 
 interface PageProps {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
 
 async function EditShowcaseSection({params}: PageProps) {
-    const numericId = Number(params.id);
+    const { id } = await params
     const record = await prisma.showcaseVideo.findUnique({
-        where: {id: numericId},
+        where: {id: Number(id) },
     });
 
     if (!record) throw new Error('Video not found');

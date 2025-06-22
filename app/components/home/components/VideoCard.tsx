@@ -5,7 +5,6 @@
 import React from 'react';
 import {Flex, Heading, Text, Card, Box, Badge, Link} from '@radix-ui/themes';
 import { ShowcaseVideo} from '@prisma/client';
-import CloudinaryVideo from "@/app/components/CloudinaryVideo";
 import {FaPencilAlt} from "react-icons/fa";
 
 type VideoCardProps = ShowcaseVideo & {

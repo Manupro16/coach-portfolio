@@ -1,9 +1,5 @@
 import {z} from 'zod';
 
-/* ─────── video-specific constants ─────── */
-const MAX_SIZE = 100 * 1024 * 1024;                    // 100 MB
-const ALLOWED = ['video/mp4', 'video/webm', 'video/quicktime'] as const;
-
 
 /* ------------  main showcase schema  ------------ */
 export const showcaseSchema = z.object({

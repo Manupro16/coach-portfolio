@@ -7,6 +7,7 @@ const ALLOWED = ['video/mp4', 'video/webm', 'video/quicktime'] as const;
 
 /* ------------  main showcase schema  ------------ */
 export const showcaseSchema = z.object({
+    id: z.number(),
     team: z.string().min(1, 'Team name is required'),
     season: z.string().min(1, 'Season name is required'),
     date: z.coerce.date({required_error: 'Date is required'}),

@@ -11,8 +11,16 @@ type VideoCardProps = ShowcaseVideo & {
     isAdmin?: boolean;      // optional so you can omit it on public pages
 };
 
+const formatDate = (d: Date | string) =>
+  new Date(d).toLocaleDateString('en-US', {
+    month: 'long',   // May
+    day: 'numeric',  // 12
+    year: 'numeric', // 2004
+  }).replace(',', ''); // remove the default comma after the day
 
-const VideoCard: React.FC<VideoCardProps> = ({id, team, season, videoSrc, description, isAdmin,}) => (
+
+
+const VideoCard: React.FC<VideoCardProps> = ({id, team, season, videoSrc, description, date, isAdmin,}) => (
     <Card className="website-background">
         <Flex
             direction="column"
@@ -30,6 +38,9 @@ const VideoCard: React.FC<VideoCardProps> = ({id, team, season, videoSrc, descri
                     </Link>
                 )}
             </Flex>
+            <Text size="4" className="text-gray-300 text-center">
+                {formatDate(date)}
+            </Text>
             <Box as="span" className="block h-[3px] w-1/2 bg-primary mt-1"/>
             <Text as="p" size="4" className="text-textMuted leading-tight mt-2" style={{textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'}}>
                 {description}

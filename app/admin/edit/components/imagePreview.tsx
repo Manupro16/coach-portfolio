@@ -45,7 +45,8 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({imageError, imagePreviewUrl,
                 fill
                 style={{objectFit: 'cover'}}
                 unoptimized={imagePreviewUrl.startsWith('blob:')}
-                // <–– if you’re previewing a blob URL, disable optimization
+                sizes="(max-width: 768px) 90vw, 512px"
+                priority
             />
         </Box>
     );

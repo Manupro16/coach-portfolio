@@ -15,7 +15,7 @@ export interface CloudinaryImageProps extends Omit<CldImageProps, 'src'> {
   src: string;
 }
 
-export default function CloudinaryImage({ src, alt, ...props }: CloudinaryImageProps) {
+export default function CloudinaryImage({ src, alt, fill, sizes, ...props }: CloudinaryImageProps) {
   // Extract and normalize public ID:
   // 1. Remove everything up to '/image/upload/' including optional 'v1234/' version prefix
   // 2. Remove file extension (.jpg, .png, etc.)
@@ -24,5 +24,5 @@ export default function CloudinaryImage({ src, alt, ...props }: CloudinaryImageP
     : src;
   const publicId = stripped.replace(/\.[^/.]+$/, '');
 
-  return <CldImage src={publicId} alt={alt} {...props} />;
+  return <CldImage src={publicId} alt={alt} {...props} fill={fill} sizes={sizes} />;
 }

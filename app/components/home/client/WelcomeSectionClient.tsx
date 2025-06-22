@@ -90,6 +90,8 @@ export default function WelcomeSectionClient({ data, session }: Props) {
             alt={data?.imageTitle ?? 'No default title for this image at the moment'}
             src={data?.imageSrc ?? '/pic/defaultImage.jpeg'}
             fill
+            sizes="(max-width: 768px) 70vw, 35vw"
+            priority
             format="auto"
             quality="auto"
             style={{ objectFit: 'cover' }}

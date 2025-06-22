@@ -3,7 +3,7 @@
 import {showcaseSchema, zodShowcaseInput} from "@/app/admin/edit/home/showcase/schema";
 import EditForm, {FieldConfig, FieldKind} from "@/app/admin/edit/components/EditForm";
 import React from "react";
-import {ImageRenderer, MarkdownRenderer, TextFieldRenderer, VideoRenderer} from "@/app/admin/edit/components/renderers";
+import {ImageRenderer, MarkdownRenderer, TextFieldRenderer, VideoRenderer, type RendererProps} from "@/app/admin/edit/components/renderers";
 
 import {zodResolver} from "@hookform/resolvers/zod";
 
@@ -15,7 +15,9 @@ const showcaseField: FieldConfig<zodShowcaseInput>[] = [
     {kind: 'video', name: 'videoFile', label: 'Video Source?'},
 ]
 
-const COMPONENT_MAP: Record<FieldKind, React.FC<any>> = {
+type ShowcaseRenderer = React.FC<RendererProps<zodShowcaseInput>>
+
+const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     text: TextFieldRenderer,
     markdown: MarkdownRenderer,
     image: ImageRenderer,

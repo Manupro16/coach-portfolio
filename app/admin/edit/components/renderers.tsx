@@ -15,7 +15,7 @@ import ImagePreview from "@/app/admin/edit/components/imagePreview";
 import VideoUpload from "@/app/admin/edit/components/VideoUploud";
 import VideoPreview from "@/app/admin/edit/components/VideoPreview";
 
-type RendererProps<T extends FieldValues> = {
+export type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
     register: UseFormRegister<T>
     control: Control<T>

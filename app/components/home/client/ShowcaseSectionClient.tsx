@@ -9,7 +9,6 @@ import {
   Link,
   Text
 } from "@radix-ui/themes";
-import { FaPencilAlt } from "react-icons/fa";
 import VideoCard from "@/app/components/home/components/VideoCard";
 import type { Session } from "next-auth";
 import {Role, type ShowcaseVideo} from "@prisma/client";

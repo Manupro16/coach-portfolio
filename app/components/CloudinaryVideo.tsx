@@ -8,9 +8,10 @@ export interface CloudinaryVideoProps
     extends Omit<CldVideoPlayerProps, 'src'> {
     /** Full Cloudinary URL *or* the public ID itself */
     src: string;
+    playerId?: string;
 }
 
-export default function CloudinaryVideo({ src, ...props }: CloudinaryVideoProps) {
+export default function CloudinaryVideo({ src, playerId, ...props }: CloudinaryVideoProps) {
 
 
 
@@ -19,9 +20,11 @@ export default function CloudinaryVideo({ src, ...props }: CloudinaryVideoProps)
         : src;
     const publicId = stripped.replace(/\.[^/.]+$/, '');
 
+      const autoId = 'cld-player-' + publicId.replace(/[^a-zA-Z0-9_-]/g, '-');
+
 
 
     return (
-        <CldVideoPlayer src={publicId}{...props} />
+        <CldVideoPlayer id={playerId ?? autoId} src={publicId}{...props} />
     );
 }

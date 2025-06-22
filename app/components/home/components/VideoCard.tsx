@@ -36,7 +36,7 @@ const VideoCard: React.FC<VideoCardProps> = ({id, team, season, videoSrc, descri
             )}
             <Badge className="bg-blue-600 text-white mb-4">{season}</Badge>
             <Box className="w-full mb-4 flex justify-center">
-                <CloudinaryVideo src={videoSrc} width="1920" height="1080" controls poster="auto"/>
+                <CloudinaryVideo playerId={`player-${id}`} src={videoSrc} width="1920" height="1080" controls poster="auto"/>
             </Box>
             <Text
                 size="3"
@@ -49,26 +49,3 @@ const VideoCard: React.FC<VideoCardProps> = ({id, team, season, videoSrc, descri
 );
 
 export default VideoCard;
-
-
-
-
-{/*<video*/
-}
-{/*    src={videoSrc}*/
-}
-{/*    controls*/
-}
-{/*    className="rounded-lg w-full max-w-full"*/
-}
-{/*    poster="/images/video-placeholder.jpg"*/
-}
-{/*    aria-label={`Video highlights of ${team} during the ${season}`}*/
-}
-{/*/>*/
-}
-
-// width="1920"
-// height="1080"
-// controls
-// poster="auto"   // first-frame thumbnail

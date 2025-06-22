@@ -56,7 +56,7 @@ export default function ShowcaseSectionClient({ data, session }: Props) {
           className="w-full"
         >
           {data.map((item, index) => (
-            <VideoCard key={index}  {...item} isAdmin={isAdmin} />
+            <VideoCard key={index} {...item} isAdmin={isAdmin} />
           ))}
         </Grid>
       </Flex>

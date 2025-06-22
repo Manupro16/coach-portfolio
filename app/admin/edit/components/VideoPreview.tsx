@@ -38,7 +38,6 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ videoError, videoPreviewUrl
         <Box className="relative w-full max-w-md h-64 rounded-md shadow-sm overflow-hidden">
             <video controls className="w-full h-full object-cover rounded">
                 <source src={videoPreviewUrl} type="video/mp4" />
-                Your browser does not support the video tag.
             </video>
         </Box>
     );

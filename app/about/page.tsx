@@ -34,7 +34,7 @@ export default function AboutSection() {
               alt=""
               fill
               sizes="(max-width:768px) 33vw, 33vw"
-              className={`object-cover ${idx === 1 ? "brightness-50" : "brightness-90"}`}
+              className={`object-cover ${idx === 1 ? "brightness-50" : "brightness-100"}`}
               priority
             />
           </div>

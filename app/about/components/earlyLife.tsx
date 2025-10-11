@@ -3,7 +3,7 @@ import {Box, Flex, Heading, Text} from "@radix-ui/themes";
 export default function EarlyLife() {
 
     return (
-        <Flex direction="column" align="center" className="mt-5">
+        <Flex direction="column" align="center" justify="center">
             <Heading as="h1" size="8" className="mb-1 text-primary-foreground">
                 Early Life
             </Heading>

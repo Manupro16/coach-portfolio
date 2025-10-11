@@ -1,6 +1,7 @@
 import Image from "next/image";
 import {Flex, Heading, Quote, Text, Box, Grid} from "@radix-ui/themes";
-import EarlyLife from "@/app/about/components/earlyLife";
+import {EarlyLife, YouthCareer} from "@/app/about/components";
+
 
 
 export default function AboutSection() {
@@ -76,6 +77,9 @@ export default function AboutSection() {
                     </Flex>
                 </Grid>
                 <EarlyLife/>
+
+                <YouthCareer/>
+
             </Grid>
         </section>
     );

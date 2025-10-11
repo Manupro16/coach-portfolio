@@ -1,6 +1,6 @@
 import Image from "next/image";
 import {Flex, Heading, Quote, Text, Box, Grid} from "@radix-ui/themes";
-import EarlyLife from "@/app/about/earlyLife";
+import EarlyLife from "@/app/about/components/earlyLife";
 
 
 export default function AboutSection() {

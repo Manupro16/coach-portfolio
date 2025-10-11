@@ -33,8 +33,6 @@ export default function EarlyLife() {
                 consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque.
             </Text>
         </Flex>
-
-
     )
 }
 

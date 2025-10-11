@@ -1,18 +1,17 @@
 import Image from "next/image";
 import {Flex, Heading, Quote, Text, Box, Grid} from "@radix-ui/themes";
-import {EarlyLife, YouthCareer, ProfessionalCareer} from "@/app/about/components";
-
+import {EarlyLife, YouthCareer, ProfessionalCareer, ProCoachingCareer} from "@/app/about/components";
 
 
 export default function AboutSection() {
     return (
         <section className="relative isolate overflow-hidden ">
-            <Grid as="div" rows="3" className="min-h-screen">
-                <Grid as="div" columns="3" rows="1" className="relative">
+            <Grid as="div" rows="auto" gap="6" className="min-h-screen">
+                <Grid as="div" columns="3" rows="1" className="relative h-[50vh]">
                     <Box className="relative h-full">
                         <Image
                             src="/pic/ChuySoccerPlayer.jpg"
-                            alt=""
+                            alt="Jesús Vera playing soccer"
                             fill
                             sizes="(max-width:768px) 33vw, 33vw"
                             className="object-cover brightness-50"
@@ -24,7 +23,7 @@ export default function AboutSection() {
                     <Box className="relative h-full">
                         <Image
                             src="/pic/chuyVeraDallasCup.jpg"
-                            alt=""
+                            alt="Jesús Vera at Dallas Cup"
                             fill
                             sizes="(max-width:768px) 33vw, 33vw"
                             className="object-cover brightness-75"
@@ -35,7 +34,7 @@ export default function AboutSection() {
                     <Box className="relative h-full">
                         <Image
                             src="/pic/jesus-vera-070219.jpg"
-                            alt=""
+                            alt="Jesús Vera portrait (2019)"
                             fill
                             sizes="(max-width:768px) 33vw, 33vw"
                             className="object-cover brightness-50"
@@ -43,7 +42,7 @@ export default function AboutSection() {
                         />
                         <Box className="absolute inset-0 bg-black/20"/>
                     </Box>
-                    <Flex direction="column" align="center" justify="center"  className="absolute inset-0">
+                    <Flex direction="column" align="center" justify="center" className="absolute inset-0 z-10 p-4">
                         <Heading as="h1" size="8" className="mb-1 text-primary-foreground">
                             José&nbsp;de&nbsp;Jesús&nbsp;Vera
                         </Heading>
@@ -78,9 +77,8 @@ export default function AboutSection() {
                 </Grid>
                 <EarlyLife/>
                 <YouthCareer/>
-
                 <ProfessionalCareer/>
-
+                <ProCoachingCareer/>
             </Grid>
         </section>
     );

@@ -1,33 +1,130 @@
-import {Box, Flex, Heading, Text} from "@radix-ui/themes";
+import * as React from 'react'
+import { Box, Flex, Heading, Text } from '@radix-ui/themes'
 
-
-interface Props {
-
-    heading: string
-    text: string
-
+interface StoryStructureProps {
+  title: string
+  subtitle?: React.ReactNode
+  story?: React.ReactNode
+  align?: 'left' | 'center' | 'right'
+  size?: 'sm' | 'md' | 'lg'
+  showSeparator?: boolean
+  accentWidthClass?: string
+  accentColorClass?: string
+  animate?: boolean
+  maxWidthClass?: string
+  headingAs?: React.ElementType
+  className?: string
+  headingProps?: React.ComponentProps<typeof Heading>
+  subtitleProps?: React.ComponentProps<typeof Text>
+  textProps?: React.ComponentProps<typeof Text>
+  containerProps?: React.ComponentProps<typeof Flex>
+  children?: React.ReactNode
 }
 
-export default function StoryStructure({heading, text}: Props) {
-    return (
+const sizeToHeading: Record<NonNullable<StoryStructureProps['size']>, Parameters<typeof Heading>[0]['size']> = {
+  sm: '6',
+  md: '7',
+  lg: '8',
+}
 
-        <Flex direction="column" align="center" justify="center">
-            <Heading as="h1" size="8" className="mb-1 text-primary-foreground">
-                {heading}
-            </Heading>
-            <Box
-                as="span"
-                className="block h-[3px] w-1/3 bg-primary motion-safe:animate-[grow_1.2s_ease-out]"
-            />
-            <Text
-                as="p"
-                align="center"
-                className="mt-6  max-w-[200ch] text-balance mx-auto leading-relaxed"
-            >
-                {text}
-            </Text>
-        </Flex>
+const alignToFlexAlign: Record<'left' | 'center' | 'right', 'start' | 'center' | 'end'> = {
+  left: 'start',
+  center: 'center',
+  right: 'end',
+}
+
+const alignToText: Record<'left' | 'center' | 'right', 'left' | 'center' | 'right'> = {
+  left: 'left',
+  center: 'center',
+  right: 'right',
+}
+
+export default function StoryStructure({
+  title,
+  subtitle,
+  story,
+  align = 'center',
+  size = 'lg',
+  showSeparator = true,
+  accentWidthClass = 'w-1/3',
+  accentColorClass = 'bg-primary',
+  animate = true,
+  maxWidthClass = 'max-w-[70ch]',
+  headingAs = 'h1',
+  className,
+  headingProps,
+  subtitleProps,
+  textProps,
+  containerProps,
+  children,
+}: StoryStructureProps) {
+  // Advanced: custom children fully override default layout
+  if (children) {
+    return (
+      <Flex direction="column" align={alignToFlexAlign[align]} justify="center" className={className} {...containerProps}>
+        {children}
+      </Flex>
     )
+  }
+
+  return (
+    <Flex
+      direction="column"
+      align={alignToFlexAlign[align]}
+      justify="center"
+      className={className}
+      {...containerProps}
+    >
+      <Heading
+        as={headingAs as any}
+        size={sizeToHeading[size]}
+        className="mb-1 text-primary-foreground"
+        {...headingProps}
+      >
+        {title}
+      </Heading>
+
+      {showSeparator && (
+        <Box
+          as="span"
+          className={[
+            'block h-[3px]',
+            accentWidthClass,
+            accentColorClass,
+            align === 'center' ? 'mx-auto' : align === 'right' ? 'ml-auto' : 'mr-auto',
+            animate ? 'motion-safe:animate-[grow_1.2s_ease-out]' : '',
+          ].join(' ')}
+        />
+      )}
+
+      {subtitle && (
+        <Text
+          as="p"
+          size="4"
+          align={alignToText[align]}
+          className="mt-4 text-secondary-foreground"
+          {...subtitleProps}
+        >
+          {subtitle}
+        </Text>
+      )}
+
+      {story && (
+        <Text
+          as="p"
+          align={alignToText[align]}
+          className={[
+            'mt-6 text-balance leading-relaxed',
+            maxWidthClass,
+            align === 'center' ? 'mx-auto' : align === 'right' ? 'ml-auto' : 'mr-auto',
+          ].join(' ')}
+          {...textProps}
+        >
+          {story}
+        </Text>
+      )}
+    </Flex>
+  )
 }
 
 

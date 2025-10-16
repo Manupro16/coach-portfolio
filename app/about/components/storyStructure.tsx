@@ -22,7 +22,7 @@ interface StoryStructureProps {
     containerProps?: React.ComponentProps<typeof Flex>
     children?: React.ReactNode
     isAdmin: boolean
-    editHref?: string // NEW: control where the pencil navigates
+    editHref: string // NEW: control where the pencil navigates
 }
 
 const sizeToHeading: Record<NonNullable<StoryStructureProps['size']>, Parameters<typeof Heading>[0]['size']> = {

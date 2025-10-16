@@ -22,6 +22,7 @@ interface StoryStructureProps {
     containerProps?: React.ComponentProps<typeof Flex>
     children?: React.ReactNode
     isAdmin: boolean
+    editHref?: string // NEW: control where the pencil navigates
 }
 
 const sizeToHeading: Record<NonNullable<StoryStructureProps['size']>, Parameters<typeof Heading>[0]['size']> = {
@@ -61,6 +62,7 @@ export default function StoryStructure({
                                            containerProps,
                                            children,
                                            isAdmin,
+                                           editHref,
                                        }: StoryStructureProps) {
     // Advanced: custom children fully override default layout
     if (children) {
@@ -89,8 +91,8 @@ export default function StoryStructure({
                 >
                     {title}
                 </Heading>
-                {isAdmin && (
-                    <Link href="/admin/edit/about/hero" aria-label="Edit about hero">
+                {isAdmin && editHref && (
+                    <Link href={editHref} aria-label={`Edit ${title}`}>
                         <FaPencilAlt
                             className="w-5 h-5 text-primary-foreground hover:text-primary transition-colors mb-2"/>
                     </Link>

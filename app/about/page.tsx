@@ -56,12 +56,7 @@ export default async function AboutSection() {
                         <Box className="absolute inset-0 bg-black/20"/>
                     </Box>
                     <Flex direction="column" align="center" justify="center" className="absolute inset-0 z-10 p-4">
-                         {isAdmin && (
-                            <Link href="/admin/edit/about/hero" aria-label="Edit about hero">
-                                <FaPencilAlt
-                                    className="w-5 h-5 text-primary-foreground hover:text-primary transition-colors mb-5"/>
-                            </Link>
-                        )}
+
                         <Heading as="h1" size="8" className="mb-1 text-primary-foreground">
                             José&nbsp;de&nbsp;Jesús&nbsp;Vera
                         </Heading>
@@ -97,6 +92,7 @@ export default async function AboutSection() {
                     title="Early Life"
                     maxWidthClass={maxWidth}
                     textProps={textSizes}
+                    isAdmin={isAdmin}
                     story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque
                 sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
                 pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia
@@ -114,118 +110,118 @@ export default async function AboutSection() {
                 consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque."
                 />
 
-                <StoryStructure
-                    title="Youth Career"
-                    maxWidthClass={maxWidth}
-                    textProps={textSizes}
-                    story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem
-                placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
-                pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer
-                nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra
-                inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus
-                donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non
-                purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus blandit quis suspendisse
-                aliquet nisi sodales consequat magna ante condimentum neque at luctus nibh finibus facilisis dapibus
-                etiam interdum tortor ligula congue sollicitudin erat viverra ac tincidunt nam porta elementum a enim
-                euismod quam justo lectus commodo augue arcu dignissim velit aliquam imperdiet mollis nullam volutpat
-                porttitor ullamcorper rutrum gravida cras eleifend turpis fames primis vulputate ornare sagittis
-                vehicula praesent dui felis venenatis ultrices proin libero feugiat tristique accumsan maecenas potenti
-                ultricies habitant morbi senectus netus suscipit auctor curabitur facilisi cubilia curae hac habitasse
-                platea dictumst lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae
-                pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam
-                urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada
-                lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per
-                conubia nostra inceptos himenaeos."
-                />
+                {/*<StoryStructure*/}
+                {/*    title="Youth Career"*/}
+                {/*    maxWidthClass={maxWidth}*/}
+                {/*    textProps={textSizes}*/}
+                {/*    story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem*/}
+                {/*placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor*/}
+                {/*pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer*/}
+                {/*nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra*/}
+                {/*inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus*/}
+                {/*donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non*/}
+                {/*purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus blandit quis suspendisse*/}
+                {/*aliquet nisi sodales consequat magna ante condimentum neque at luctus nibh finibus facilisis dapibus*/}
+                {/*etiam interdum tortor ligula congue sollicitudin erat viverra ac tincidunt nam porta elementum a enim*/}
+                {/*euismod quam justo lectus commodo augue arcu dignissim velit aliquam imperdiet mollis nullam volutpat*/}
+                {/*porttitor ullamcorper rutrum gravida cras eleifend turpis fames primis vulputate ornare sagittis*/}
+                {/*vehicula praesent dui felis venenatis ultrices proin libero feugiat tristique accumsan maecenas potenti*/}
+                {/*ultricies habitant morbi senectus netus suscipit auctor curabitur facilisi cubilia curae hac habitasse*/}
+                {/*platea dictumst lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae*/}
+                {/*pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam*/}
+                {/*urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada*/}
+                {/*lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos."*/}
+                {/*/>*/}
 
-                <StoryStructure
-                    title="Professional Career"
-                    maxWidthClass={maxWidth}
-                    textProps={textSizes}
-                    story="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*<StoryStructure*/}
+                {/*    title="Professional Career"*/}
+                {/*    maxWidthClass={maxWidth}*/}
+                {/*    textProps={textSizes}*/}
+                {/*    story="Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos.
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos.*/}
 
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque
-                sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.
-                Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia
-                integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per
-                conubia nostra inceptos himenaeos."
-                />
+                {/*Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque*/}
+                {/*sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.*/}
+                {/*Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia*/}
+                {/*integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos."*/}
+                {/*/>*/}
 
-                <StoryStructure
-                    title="Professional Coaching Career"
-                    maxWidthClass={maxWidth}
-                    textProps={textSizes}
-                    story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem
-                placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
-                pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer
-                nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra
-                inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus
-                donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non
-                purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus blandit quis suspendisse
-                aliquet nisi sodales consequat magna ante condimentum neque at luctus nibh finibus facilisis dapibus
-                etiam interdum tortor ligula congue sollicitudin erat viverra ac tincidunt nam porta elementum a enim
-                euismod quam justo lectus commodo augue arcu dignissim velit aliquam imperdiet mollis nullam volutpat
-                porttitor ullamcorper rutrum gravida cras eleifend turpis fames primis vulputate ornare sagittis
-                vehicula praesent dui felis venenatis ultrices proin libero feugiat tristique accumsan maecenas potenti
-                ultricies habitant morbi senectus netus suscipit auctor curabitur facilisi cubilia curae hac habitasse
-                platea dictumst lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae
-                pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam
-                urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada
-                lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per
-                conubia nostra inceptos himenaeos."
-                />
+                {/*<StoryStructure*/}
+                {/*    title="Professional Coaching Career"*/}
+                {/*    maxWidthClass={maxWidth}*/}
+                {/*    textProps={textSizes}*/}
+                {/*    story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem*/}
+                {/*placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor*/}
+                {/*pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer*/}
+                {/*nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra*/}
+                {/*inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus*/}
+                {/*donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non*/}
+                {/*purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus blandit quis suspendisse*/}
+                {/*aliquet nisi sodales consequat magna ante condimentum neque at luctus nibh finibus facilisis dapibus*/}
+                {/*etiam interdum tortor ligula congue sollicitudin erat viverra ac tincidunt nam porta elementum a enim*/}
+                {/*euismod quam justo lectus commodo augue arcu dignissim velit aliquam imperdiet mollis nullam volutpat*/}
+                {/*porttitor ullamcorper rutrum gravida cras eleifend turpis fames primis vulputate ornare sagittis*/}
+                {/*vehicula praesent dui felis venenatis ultrices proin libero feugiat tristique accumsan maecenas potenti*/}
+                {/*ultricies habitant morbi senectus netus suscipit auctor curabitur facilisi cubilia curae hac habitasse*/}
+                {/*platea dictumst lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae*/}
+                {/*pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam*/}
+                {/*urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada*/}
+                {/*lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per*/}
+                {/*conubia nostra inceptos himenaeos."*/}
+                {/*/>*/}
             </Grid>
         </section>
     );

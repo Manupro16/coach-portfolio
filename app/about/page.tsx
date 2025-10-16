@@ -56,7 +56,12 @@ export default async function AboutSection() {
                         <Box className="absolute inset-0 bg-black/20"/>
                     </Box>
                     <Flex direction="column" align="center" justify="center" className="absolute inset-0 z-10 p-4">
-
+                        {isAdmin && (
+                            <Link href="/admin/edit/about/hero" aria-label="Edit about hero">
+                                <FaPencilAlt
+                                    className="w-5 h-5 text-primary-foreground hover:text-primary transition-colors mb-2"/>
+                            </Link>
+                        )}
                         <Heading as="h1" size="8" className="mb-1 text-primary-foreground">
                             José&nbsp;de&nbsp;Jesús&nbsp;Vera
                         </Heading>
@@ -93,6 +98,7 @@ export default async function AboutSection() {
                     maxWidthClass={maxWidth}
                     textProps={textSizes}
                     isAdmin={isAdmin}
+                    editHref="/admin/edit/about/stories"
                     story="Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque
                 sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor
                 pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia

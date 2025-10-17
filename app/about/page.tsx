@@ -15,7 +15,7 @@ export default async function AboutSection() {
 
     const [hero, stories, session] = await Promise.all([
         prisma?.aboutHero.findFirst({
-            include: {images: {orderBy: {id: 'asc'}}}
+            include: {images: {orderBy: {order: 'asc'}}}
         }),
         prisma?.aboutStory.findMany({
             where: {published: true},

@@ -18,7 +18,7 @@ export default async function AboutSection() {
 
     return (
         <section className="relative isolate overflow-hidden ">
-            <Grid as="div" rows="auto" gap="2" className="min-h-screen">
+            <Grid as="div" rows="auto" gap="6" className="min-h-screen">
                 <Grid as="div" columns="3" rows="1" className="relative h-[50vh]">
                     <Box className="relative h-full">
                         <Image

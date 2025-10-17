@@ -93,3 +93,45 @@ model WelcomeContent {
   imageTitle      String   @default("") // title/caption for the image
   updatedAt       DateTime @updatedAt
 }
+
+// About page hero (singleton)
+model AboutHero {
+  id       Int     @id @default(1) // singleton row
+  fullName String
+  nickname String? // e.g. "El Chuy" Vera
+  headline String? // short, 1–2 sentences
+  summary  String? @db.Text // longer paragraph
+
+  images AboutHeroImage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AboutHeroImage {
+  id          Int    @id @default(autoincrement())
+  aboutHeroId Int
+  order       Int // 0,1,2 ... controls the 3-column order
+  src         String // e.g. "/pic/chuyVeraDallasCup.jpg"
+  alt         String
+
+  aboutHero AboutHero @relation(fields: [aboutHeroId], references: [id], onDelete: Cascade)
+
+  @@index([aboutHeroId, order])
+}
+
+// Reusable story entries under the About page
+model AboutStory {
+  id        Int     @id @default(autoincrement())
+  slug      String  @unique // for targeted edits and future routes
+  title     String
+  subtitle  String?
+  body      String  @db.Text // markdown or plain text
+  order     Int     @default(0)
+  published Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}

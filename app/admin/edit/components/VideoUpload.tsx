@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Text } from '@radix-ui/themes';
+import React, {useEffect, useRef} from 'react';
+import {Text} from '@radix-ui/themes';
 import {
     Control,
     Controller,
@@ -21,18 +21,29 @@ interface VideoUploadProps<TFieldValues extends FieldValues> {
 }
 
 function VideoUpload<TFieldValues extends FieldValues>({
-    control,
-    errors,
-    setValue,
-    colorMode,
-    name,
-    previewName,
-}: VideoUploadProps<TFieldValues>) {
+                                                           control,
+                                                           errors,
+                                                           setValue,
+                                                           colorMode,
+                                                           name,
+                                                           previewName,
+                                                       }: VideoUploadProps<TFieldValues>) {
+
+
+    const lastUrlRef = useRef<string | null>(null)
+
+
+    useEffect(() => {
+        return () => {
+            if (lastUrlRef.current?.startsWith('blob:')) URL.revokeObjectURL(lastUrlRef.current);
+        };
+    }, []);
+
     return (
         <Controller<TFieldValues, Path<TFieldValues>>
             control={control}
             name={name}
-            render={({ field }) => (
+            render={({field}) => (
                 <>
                     <input
                         id="videoFile"
@@ -43,11 +54,10 @@ function VideoUpload<TFieldValues extends FieldValues>({
                             field.onChange(files);
 
                             if (files[0]) {
+                                if (lastUrlRef.current?.startsWith('blob:')) URL.revokeObjectURL(lastUrlRef.current);
                                 const previewUrl = URL.createObjectURL(files[0]);
-                                setValue(
-                                    previewName, previewUrl as TFieldValues[typeof previewName]
-
-                                );
+                                 lastUrlRef.current = previewUrl;
+                                setValue(previewName, previewUrl as TFieldValues[typeof previewName]);
                             }
                         }}
                         className={`mt-1 block w-full ${
@@ -56,7 +66,7 @@ function VideoUpload<TFieldValues extends FieldValues>({
                     />
                     {errors[field.name as keyof TFieldValues] && (
                         <Text as="p" className="text-red-500 mt-2">
-                            {String(errors['videoFile']?.message)}
+                            {String(errors[field.name as keyof TFieldValues]?.message ?? '')}
                         </Text>
                     )}
                 </>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Text} from '@radix-ui/themes';
 import {Control, Controller, FieldErrors, FieldValues, Path, UseFormSetValue} from 'react-hook-form';
 
@@ -25,6 +25,16 @@ function ImageUpload<TFieldValues extends FieldValues>({
                                                        }: ImageUploadProps<TFieldValues>) {
 
 
+
+    const lastUrlRef = useRef<string | null>(null)
+
+    useEffect(() => {
+        return () => {
+            if (lastUrlRef.current?.startsWith('blob:')) URL.revokeObjectURL(lastUrlRef.current);
+        };
+    }, [])
+
+
     return (
         <Controller<TFieldValues, Path<TFieldValues>>
             control={control}
@@ -40,9 +50,12 @@ function ImageUpload<TFieldValues extends FieldValues>({
                             const files = e.target.files ? Array.from(e.target.files) : [];
                             field.onChange(files); // Pass the array to the form state
 
-                            // Generate a preview URL
+
                             if (files[0]) {
+                                // revoke previous URL before creating a new one
+                                if (lastUrlRef.current?.startsWith('blob:')) URL.revokeObjectURL(lastUrlRef.current);
                                 const previewUrl = URL.createObjectURL(files[0]);
+                                lastUrlRef.current = previewUrl
                                 setValue(previewName, previewUrl as TFieldValues[typeof previewName]);
                             }
                         }}
@@ -52,7 +65,7 @@ function ImageUpload<TFieldValues extends FieldValues>({
                     />
                     {errors[field.name as keyof TFieldValues] && (
                         <Text as="p" className="text-red-500 mt-2">
-                            {String(errors['imageFile']?.message)}
+                            {String(errors[field.name as keyof TFieldValues]?.message ?? "err")}
                         </Text>
                     )}
                 </>

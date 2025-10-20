@@ -7,9 +7,6 @@ import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 
 
-
-
-
 // 1) Server Action
 export async function onSubmitAction(raw: zodWelcomeInput) {
     'use server'
@@ -36,38 +33,43 @@ export async function onSubmitAction(raw: zodWelcomeInput) {
         imageSrc = upload.secure_url
     }
 
-    // ③ write everything in a single Prisma update
-    await prisma.welcomeContent.update({
-        where: {id: 1},           // adjust to your PK
-        data: {
+    const imageSrcFinal = imageSrc ?? "";
+
+    await prisma.welcomeContent.upsert({
+        where: {id: 1},
+        update: {
             title: data.title,
             subtitle: data.subtitle,
             contentTitle: data.contentTitle,
             contentSubtitle: data.contentSubtitle,
             imageTitle: data.imageTitle,
-            imageSrc,                        // new or existing URL
-            updatedAt: new Date(),
-        },
+            imageSrc: imageSrcFinal,
+        }, create: {
+            title: data.title,
+            subtitle: data.subtitle,
+            contentTitle: data.contentTitle,
+            contentSubtitle: data.contentSubtitle,
+            imageTitle: data.imageTitle,
+            imageSrc: imageSrcFinal,
+        }
     })
 
+
     revalidatePath('/')
-     redirect('/')
+    redirect('/')
 }
 
 
 async function EditWelcomeSection() {
     const record = await prisma.welcomeContent.findFirst()
-    if (!record) throw new Error('No welcome section found')
 
-    // Pick only the props your form needs
     const initialData: zodWelcomeInput = {
-        title: record.title,
-        subtitle: record.subtitle,
-        contentTitle: record.contentTitle,
-        contentSubtitle: record.contentSubtitle,
-        imageSrc: record.imageSrc,
-        imageTitle: record.imageTitle,
-        updatedAt: record.updatedAt,
+        title: record?.title ?? '',
+        subtitle: record?.subtitle ?? '',
+        contentTitle: record?.contentTitle ?? '',
+        contentSubtitle: record?.contentSubtitle ?? '',
+        imageSrc: record?.imageSrc ?? '',
+        imageTitle: record?.imageTitle ?? '',
     }
 
 

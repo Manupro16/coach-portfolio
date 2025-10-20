@@ -12,7 +12,7 @@ import TextField from './TextField'
 import DynamicReactMDEditor from './DynamicReactMDEditor'
 import ImageUpload from './imageUpload'
 import ImagePreview from "@/app/admin/edit/components/imagePreview";
-import VideoUpload from "@/app/admin/edit/components/VideoUploud";
+import VideoUpload from "@/app/admin/edit/components/VideoUpload";
 import VideoPreview from "@/app/admin/edit/components/VideoPreview";
 
 export type RendererProps<T extends FieldValues> = {

@@ -23,7 +23,8 @@ const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     text: TextFieldRenderer,
     markdown: MarkdownRenderer,
     image: ImageRenderer,
-    video: () => null
+    video: () => null,
+    date: () => null,
 }
 
 

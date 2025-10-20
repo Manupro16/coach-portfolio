@@ -1,3 +1,5 @@
+// admin/edit/home/showcase/[id]/page.tsx
+
 import {prisma} from '@/lib/prisma';
 import {showcaseSchema, type zodShowcaseInput} from "@/app/admin/edit/home/showcase/schema";
 import React from "react";

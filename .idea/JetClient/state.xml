@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JetClientState">
+    <option name="draftsState">
+      <draftsState>
+        <option name="requests">
+          <list>
+            <requestState>
+              <option name="id" value="29a5170a-45b0-4982-8d1a-6e12aaa26909" />
+              <option name="method" value="GET" />
+              <option name="name" value="Draft" />
+            </requestState>
+            <requestState>
+              <option name="body">
+                <bodyState>
+                  <option name="raw" value="{&#10;  &quot;title&quot;: &quot;About Coach Vera&quot;,&#10;  &quot;nickname&quot;: &quot;El Chuy&quot;,&#10;  &quot;tagline&quot;: &quot;Helping players reach their full potential through discipline, data, and love for the game.&quot;,&#10;  &quot;image1Src&quot;: &quot;https://images.unsplash.com/photo-1521417531039-94f0d7846b52?q=80&amp;w=1200&amp;auto=format&amp;fit=crop&quot;,&#10;  &quot;image2Src&quot;: &quot;https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&amp;w=1200&amp;auto=format&amp;fit=crop&quot;,&#10;  &quot;image3Src&quot;: &quot;https://images.unsplash.com/photo-1526676037777-05a232554f38?q=80&amp;w=1200&amp;auto=format&amp;fit=crop&quot;&#10;}" />
+                  <option name="type" value="JSON" />
+                </bodyState>
+              </option>
+              <option name="id" value="c73ea5e2-4bee-47da-aaf0-f4d3499ce8c3" />
+              <option name="method" value="POST" />
+              <option name="name" value="about-hero-test" />
+              <option name="queryParams">
+                <list>
+                  <queryParamState>
+                    <option name="key" value="title" />
+                    <option name="value" value="&quot;Jose De Jesus Vera&quot;" />
+                  </queryParamState>
+                  <queryParamState>
+                    <option name="key" value="nickname" />
+                    <option name="value" value="El Chuy Vera" />
+                  </queryParamState>
+                  <queryParamState>
+                    <option name="key" value="tagline" />
+                    <option name="value" value="Former professional player turned coach with 9 years of pro-level coaching. Currently guiding the next generation as an MLS NEXT Academy coach at FC Dallas" />
+                  </queryParamState>
+                  <queryParamState>
+                    <option name="key" value="image1Src" />
+                    <option name="value" value="/pic/ChuySoccerPlayer.jpg" />
+                  </queryParamState>
+                  <queryParamState>
+                    <option name="key" value="image2Src" />
+                    <option name="value" value="/pic/chuyVeraDallasCup.jpg" />
+                  </queryParamState>
+                  <queryParamState>
+                    <option name="key" value="image3Src" />
+                    <option name="value" value="/pic/jesus-vera-070219.jpg" />
+                  </queryParamState>
+                </list>
+              </option>
+              <option name="url" value="http://localhost:3000/api/about/hero?title=&quot;Jose De Jesus Vera&quot;&amp;nickname=El Chuy Vera&amp;tagline=Former professional player turned coach with 9 years of pro-level coaching. Currently guiding the next generation as an MLS NEXT Academy coach at FC Dallas&amp;image1Src=/pic/ChuySoccerPlayer.jpg&amp;image2Src=/pic/chuyVeraDallasCup.jpg&amp;image3Src=/pic/jesus-vera-070219.jpg" />
+            </requestState>
+          </list>
+        </option>
+      </draftsState>
+    </option>
+    <option name="id" value="2df7262c-bc74-4be8-b2d8-2603ea1f9664" />
+    <option name="version" value="6" />
+  </component>
+</project>

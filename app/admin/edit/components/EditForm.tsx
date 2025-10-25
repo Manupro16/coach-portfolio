@@ -69,7 +69,7 @@ export default function EditForm<TFieldValues extends Record<string, unknown>, T
     })
 
     return (
-        <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">
+        <Flex justify="center" align="center" className="relative z-10 px-4 py-12 sm:px-6 lg:px-8">
             <Box
                 className={`shadow-md rounded-lg p-8 w-full max-w-3xl ${colorMode === 'dark' ? 'bg-gray-900' : 'bg-gray-700'}`}>
                 <Heading size="4" className="text-2xl font-semibold text-green-500 mb-4">

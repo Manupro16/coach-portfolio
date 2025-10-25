@@ -14,6 +14,7 @@ import ImageUpload from './imageUpload'
 import ImagePreview from "@/app/admin/edit/components/imagePreview";
 import VideoUpload from "@/app/admin/edit/components/VideoUpload";
 import VideoPreview from "@/app/admin/edit/components/VideoPreview";
+import ImageArray from './imageArray'
 
 export type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
@@ -182,6 +183,21 @@ export function DateRenderer<T extends FieldValues>({ field, control, errors, co
             }}
         />
     );
+}
+
+
+export function ImageArrayRenderer<T extends FieldValues>({ field, control, setValue, errors, colorMode }: RendererProps<T>) {
+  return (
+    <ImageArray<T>
+      name={field.name as Path<T>}
+      control={control}
+      setValue={setValue}
+      errors={errors}
+      colorMode={colorMode}
+      label={field.label}
+      count={field.count ?? 3}
+    />
+  )
 }
 
 

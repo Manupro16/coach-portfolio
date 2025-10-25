@@ -23,6 +23,7 @@ export interface FieldConfig<T> {
     name: Path<T>
     label: string
     defaultValue?: T[keyof T]
+    count?: number
 }
 
 // Props for your generic form:
@@ -76,11 +77,11 @@ export default function EditForm<TFieldValues extends Record<string, unknown>, T
                 </Heading>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    {fields.map(field => {
+                    {fields.map((field, idx) => {
                         const Component = componentMap[field.kind]
                         return (
                             <Component
-                                key={field.name}
+                                key={`${String(field.name)}-${idx}`}
                                 field={field}
                                 register={register}
                                 control={control}

@@ -15,12 +15,16 @@ async function EditHeroSection() {
         },
     })
 
+    // Normalize images to exactly 3 slots (order 0..2) to match the editor count
+    const rawImages = (record?.images ?? []).sort((a, b) => a.order - b.order)
+    const images = Array.from({ length: 3 }, (_, i) => rawImages.find(x => x.order === i) ?? { id: undefined as any, order: i, src: '', alt: '' })
+
     const initialData: HeroInput = {
         fullName: record?.fullName ?? '',
         nickname: record?.nickname ?? '',
         headline: record?.headline ?? '',
         summary: record?.summary ?? '',
-        images: record?.images ?? [],
+        images,
     }
 
     return (

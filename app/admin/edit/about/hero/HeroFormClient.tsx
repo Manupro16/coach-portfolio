@@ -1,7 +1,7 @@
 'use client'
 
 import EditForm, {type FieldConfig, type FieldKind} from "@/app/admin/edit/components/EditForm";
-import { TextFieldRenderer, MarkdownRenderer, ImageRenderer, type RendererProps } from '@/app/admin/edit/components/renderers'
+import { TextFieldRenderer, MarkdownRenderer, ImageRenderer, ImageArrayRenderer, type RendererProps } from '@/app/admin/edit/components/renderers'
 import React from "react";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { heroSchema, type HeroInput, type HeroOutput } from "@/app/admin/edit/about/hero/schema";
@@ -12,9 +12,7 @@ const heroFields: FieldConfig<HeroInput>[] = [
     {kind: 'text', name: 'nickname', label: 'Subtitle'},
     {kind: 'text', name: 'headline', label: 'Section Heading'},
     {kind: 'markdown', name: 'summary', label: 'Section Body Text'},
-    {kind: 'image', name: 'images', label: 'Hero Image'},
-    {kind: 'image', name: 'images', label: 'Hero Image'},
-    {kind: 'image', name: 'images', label: 'Hero Image'},
+    {kind: 'imageArray', name: 'images', label: 'Hero Images', count: 3},
 ]
 
 type ShowcaseRenderer = React.FC<RendererProps<HeroInput>>
@@ -23,6 +21,7 @@ const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     text: TextFieldRenderer,
     markdown: MarkdownRenderer,
     image: ImageRenderer,
+    imageArray: ImageArrayRenderer,
     video: () => null,
     date: () => null,
 }

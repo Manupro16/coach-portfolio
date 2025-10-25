@@ -26,7 +26,7 @@ const stringOrEmpty = z.preprocess(
 );
 const orderField = z.preprocess(
   (v) => (v === "" || v == null ? 0 : v),
-  z.coerce.number().int().min(0).max(2) // cap to 0–2 for 3 image slots
+  z.coerce.number().int().min(0).max(99) // cap to 0–99 to support variable image counts
 );
 
 export const heroImageRowSchema = z
@@ -34,6 +34,8 @@ export const heroImageRowSchema = z
     id: z.coerce.number().optional(),
     order: orderField,              // 0,1,2
     src: urlOrPathOrEmpty,          // "" allowed in form
+    // transient file field for uploads/preview (form-only)
+    file: z.any().optional(),
     // Allow empty by default; enforce constraints conditionally below
     alt: stringOrEmpty,
   })
@@ -67,7 +69,7 @@ export const heroSchema = z.object({
   nickname: normalizeNullishToEmpty,   // Prisma: String?
   headline: normalizeNullishToEmpty,   // Prisma: String?
   summary: normalizeNullishToEmpty,    // Prisma: String? (Text)
-  images: z.array(heroImageRowSchema).min(3).max(3), // exactly 3 slots in UI
+  images: z.array(heroImageRowSchema).min(1).max(12), // variable slots; editor controls count
 });
 
 export type HeroInput = z.input<typeof heroSchema>;

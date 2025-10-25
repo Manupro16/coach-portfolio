@@ -18,7 +18,7 @@ import VideoPreview from "@/app/admin/edit/components/VideoPreview";
 export type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
     register: UseFormRegister<T>
-    control: Control<T>
+    control: Control<T, any, any>
     setValue: UseFormSetValue<T>
     errors: FieldErrors<T>
     colorMode: 'light' | 'dark'

@@ -20,23 +20,47 @@ const urlOrPathOrEmpty = z
   .transform((v) => v ?? "");
 
 const nonEmpty = (min = 1) => z.string().trim().min(min);
+const stringOrEmpty = z.preprocess(
+  (v) => (v === null || v === undefined ? "" : v),
+  z.string()
+);
 const orderField = z.preprocess(
   (v) => (v === "" || v == null ? 0 : v),
-  z.coerce.number().int().min(0)
+  z.coerce.number().int().min(0).max(2) // cap to 0–2 for 3 image slots
 );
 
-export const heroImageRowSchema = z.object({
-  id: z.coerce.number().optional(),
-  order: orderField,              // 0,1,2
-  src: urlOrPathOrEmpty,          // "" allowed in form
-  alt: nonEmpty(2).max(120),      // see superRefine below
-}).superRefine((val, ctx) => {
-  const hasSrc = val.src.trim() !== "";
-  // If src is empty, allow alt to be empty as well (empty slot).
-  if (!hasSrc && val.alt.trim().length > 0) {
-    // optional: normalize or warn. We'll let it pass silently.
-  }
-});
+export const heroImageRowSchema = z
+  .object({
+    id: z.coerce.number().optional(),
+    order: orderField,              // 0,1,2
+    src: urlOrPathOrEmpty,          // "" allowed in form
+    // Allow empty by default; enforce constraints conditionally below
+    alt: stringOrEmpty,
+  })
+  .superRefine((val, ctx) => {
+    const hasSrc = val.src.trim() !== "";
+    const altTrim = val.alt.trim();
+
+    if (hasSrc) {
+      if (altTrim.length < 2) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Alt text must be at least 2 characters when an image src is provided",
+          path: ["alt"],
+        });
+      }
+      if (altTrim.length > 120) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.too_big,
+          type: "string",
+          maximum: 120,
+          inclusive: true,
+          message: "Alt text must be at most 120 characters",
+          path: ["alt"],
+        });
+      }
+    }
+  });
 
 export const heroSchema = z.object({
   fullName: nonEmpty(2).max(120),
@@ -46,4 +70,5 @@ export const heroSchema = z.object({
   images: z.array(heroImageRowSchema).min(3).max(3), // exactly 3 slots in UI
 });
 
-export type HeroFormValues = z.infer<typeof heroSchema>;
+export type HeroInput = z.input<typeof heroSchema>;
+export type HeroOutput = z.output<typeof heroSchema>;

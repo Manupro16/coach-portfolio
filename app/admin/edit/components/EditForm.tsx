@@ -26,33 +26,33 @@ export interface FieldConfig<T> {
 }
 
 // Props for your generic form:
-interface EditFormProps<T extends Record<string, unknown>> {
-    fields: FieldConfig<T>[]
+interface EditFormProps<TFieldValues extends Record<string, unknown>, TOutput = TFieldValues> {
+    fields: FieldConfig<TFieldValues>[]
     componentMap: Record<
         FieldKind,
         React.FC<{
-            field: FieldConfig<T>
-            register: UseFormRegister<T>
-            control: Control<T>
-            setValue: UseFormSetValue<T>
-            errors: FieldErrors<T>
+            field: FieldConfig<TFieldValues>
+            register: UseFormRegister<TFieldValues>
+            control: Control<TFieldValues, any, TOutput>
+            setValue: UseFormSetValue<TFieldValues>
+            errors: FieldErrors<TFieldValues>
             colorMode: 'light' | 'dark'
         }>
     >
-    initialData: DefaultValues<T>
-    onSubmit: (values: T) => Promise<void>
+    initialData: DefaultValues<TFieldValues>
+    onSubmit: (values: TOutput) => Promise<void>
     title?: string
-    resolver?: Resolver<T>
+    resolver?: Resolver<TFieldValues, any, TOutput>
 }
 
-export default function EditForm<T extends Record<string, unknown>>({
-                                                                        fields,
-                                                                        resolver,
-                                                                        componentMap,
-                                                                        initialData,
-                                                                        onSubmit,
-                                                                        title = 'Edit Entry'
-                                                                    }: EditFormProps<T>) {
+export default function EditForm<TFieldValues extends Record<string, unknown>, TOutput = TFieldValues>({
+                                                                                                           fields,
+                                                                                                           resolver,
+                                                                                                           componentMap,
+                                                                                                           initialData,
+                                                                                                           onSubmit,
+                                                                                                           title = 'Edit Entry'
+                                                                                                       }: EditFormProps<TFieldValues, TOutput>) {
     const [colorMode] = React.useState<'light' | 'dark'>('dark')
     const {
         register,
@@ -60,7 +60,12 @@ export default function EditForm<T extends Record<string, unknown>>({
         control,
         setValue,
         formState: {errors, isSubmitting, isValid},
-    } = useForm<T>({defaultValues: initialData, resolver: resolver, mode: 'onChange', reValidateMode: 'onChange'})
+    } = useForm<TFieldValues, any, TOutput>({
+        defaultValues: initialData,
+        resolver: resolver,
+        mode: 'onChange',
+        reValidateMode: 'onChange'
+    })
 
     return (
         <Flex justify="center" align="center" className=" h-screen relative z-10 px-4 py-12 sm:px-6 lg:px-8">

@@ -1,10 +1,103 @@
 import { prisma } from '@/lib/prisma'
 import HeroFormClient from '@/app/admin/edit/about/hero/HeroFormClient'
-import { type HeroInput } from '@/app/admin/edit/about/hero/schema'
+import { heroSchema, type HeroInput, type HeroOutput } from '@/app/admin/edit/about/hero/schema'
+import { cloudinary } from '@/lib/cloudinary'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
-export async function onSubmitAction(raw: any) {
+export async function onSubmitAction(raw: HeroOutput) {
     'use server'
-    console.log(raw)
+
+    // Validate and normalize on the server
+    const data = heroSchema.parse(raw) as HeroOutput
+
+    // Prepare images: upload new files, ignore empty/blob src
+    const processed = [] as { order: number; src: string; alt: string }[]
+
+    for (let i = 0; i < data.images.length; i++) {
+        const img: any = data.images[i] as any
+        const order = typeof img.order === 'number' ? img.order : i
+        let src: string = (img.src ?? '').trim()
+        const alt: string = (img.alt ?? '').trim()
+
+        const files = Array.isArray(img.file) ? img.file as File[] : []
+        const file = files[0]
+
+        if (file) {
+            const ALLOWED = ['image/jpeg', 'image/png', 'image/webp']
+            if (!ALLOWED.includes(file.type)) throw new Error('Invalid file type')
+            if (file.size > 5 * 1024 * 1024) throw new Error('File exceeds 5 MB')
+
+            const buffer = Buffer.from(await file.arrayBuffer())
+            const base64 = buffer.toString('base64')
+            const dataUri = `data:${file.type};base64,${base64}`
+
+            const upload = await cloudinary.uploader.upload(dataUri, {
+                folder: 'coach-portfolio/about-hero',
+            })
+            src = upload.secure_url
+        } else if (src.startsWith('blob:')) {
+            // Do not persist blob preview URLs
+            src = ''
+        }
+
+        if (src !== '') {
+            processed.push({ order, src, alt })
+        }
+    }
+
+    await prisma.$transaction(async (tx) => {
+        // Ensure the singleton parent row exists and update text fields
+        await tx.aboutHero.upsert({
+            where: { id: 1 },
+            update: {
+                fullName: data.fullName,
+                nickname: data.nickname || null,
+                headline: data.headline || null,
+                summary: data.summary || null,
+            },
+            create: {
+                id: 1,
+                fullName: data.fullName,
+                nickname: data.nickname || null,
+                headline: data.headline || null,
+                summary: data.summary || null,
+            },
+        })
+
+        // Sync images by order (0..2)
+        const existing = await tx.aboutHeroImage.findMany({ where: { aboutHeroId: 1 } })
+        const existingByOrder = new Map(existing.map((e) => [e.order, e]))
+        const desiredByOrder = new Map(processed.map((d) => [d.order, d]))
+
+        // Upsert desired
+        for (const d of processed) {
+            const ex = existingByOrder.get(d.order)
+            if (ex) {
+                if (ex.src !== d.src || ex.alt !== d.alt) {
+                    await tx.aboutHeroImage.update({
+                        where: { id: ex.id },
+                        data: { src: d.src, alt: d.alt },
+                    })
+                }
+            } else {
+                await tx.aboutHeroImage.create({
+                    data: { aboutHeroId: 1, order: d.order, src: d.src, alt: d.alt },
+                })
+            }
+        }
+
+        // Delete removed orders
+        for (const ex of existing) {
+            if (!desiredByOrder.has(ex.order)) {
+                await tx.aboutHeroImage.delete({ where: { id: ex.id } })
+            }
+        }
+    })
+
+    // Revalidate About page and return/redirect
+    revalidatePath('/about')
+    redirect('/about')
 }
 
 async function EditHeroSection() {

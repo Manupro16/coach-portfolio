@@ -34,11 +34,13 @@ export async function onSubmitAction(raw: StoryOutput) {
 }
 
 interface PageProps {
-  searchParams?: { slug?: string }
+  searchParams: Promise<{ slug?: string | string[] }>
 }
 
 export default async function EditAboutStories({ searchParams }: PageProps) {
-  const slug = searchParams?.slug?.toString()
+  const sp = await searchParams
+  const slugParam = sp?.slug
+  const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam
 
   let initialData: StoryInput
 

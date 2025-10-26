@@ -1,20 +1,19 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-// next.config.js
-module.exports = {
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: '100mb'
-    }
-  }
-};
+      bodySizeLimit: '100mb',
+    },
+  },
+}
 
-
-export default nextConfig;
+export default nextConfig

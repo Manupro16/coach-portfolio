@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { Session } from 'next-auth'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button, Flex, Link, Text, DropdownMenu } from '@radix-ui/themes'
 
@@ -31,20 +30,16 @@ export interface NavLink {
 }
 
 interface NavBarClientProps {
-  session: Session | null
   links: NavLink[]
 }
 
-export default function NavBarClient({ session: initialSession, links,  }: NavBarClientProps) {
+export default function NavBarClient({ links }: NavBarClientProps) {
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   const { data: session, status } = useSession()
-  const effectiveSession = session ?? initialSession;
 
-  // Use effectiveSession everywhere
-  const isLoggedIn = !!effectiveSession?.user;
-
-
+  const isLoggedIn = !!session?.user
+  const showLoading = status === 'loading' && !session
 
   // Desktop navigation items
   const DesktopNav: React.FC<{ links: NavLink[] }> = ({ links }) => (
@@ -105,11 +100,11 @@ export default function NavBarClient({ session: initialSession, links,  }: NavBa
 
         {/* Auth Section */}
         <Flex align="center" gap="4">
-          {status === 'loading' ? (
-            <Text>Loading…</Text>
+          {showLoading ? (
+            <Text aria-live="polite">Loading…</Text>
           ) : isLoggedIn ? (
             <>
-              <Text size="3">Hi, {effectiveSession.user?.name ?? 'Coach'}</Text>
+              <Text size="3">Hi, {session?.user?.name ?? 'Coach'}</Text>
               <Button variant="ghost" size="2" onClick={() => signOut()}>
                 Sign Out
               </Button>

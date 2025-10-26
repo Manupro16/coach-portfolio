@@ -13,7 +13,7 @@ interface ProvidersProps {
 export default function Providers({ children, session }: ProvidersProps) {
   return (
     <SessionProvider session={session}>
-      <Theme className="website-background" appearance="dark">
+      <Theme className="website-background min-h-screen flex flex-col" appearance="dark">
         {children}
       </Theme>
     </SessionProvider>

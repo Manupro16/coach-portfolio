@@ -34,9 +34,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
         <Providers session={session}>
-          <NavBarServer />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <div className="min-h-screen flex flex-col">
+            <NavBarServer />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </Providers>
       </body>
     </html>

@@ -31,6 +31,7 @@ const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     image: ImageRenderer,
     video: VideoRenderer,
     date: DateRenderer,
+    imageArray: () => null
 }
 
 

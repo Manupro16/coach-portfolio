@@ -4,7 +4,30 @@
 
 version: "1.0"
 linter: jetbrains/qodana-js:2025.2
+
 profile:
-  name: qodana.recommended
+  path: ./.idea/inspectionProfiles/Project_Default.xml
+
 include:
   - name: CheckDependencyLicenses
+
+excludePaths:
+  - "node_modules/**"
+  - "**/node_modules/**"
+  - ".pnpm/**"
+  - "**/.pnpm/**"
+  - ".yarn/**"
+  - "vendor/**"
+  - "dist/**"
+  - "build/**"
+  - "out/**"
+  - ".next/**"
+  - "coverage/**"
+  - "public/**"
+  - "**/generated/**"
+  - "**/*.min.*"
+  - "**/*.d.ts"
+  - "**/*.map"
+  - "**/*.snap"
+  - "**/*.spec.*"
+  - "**/*.test.*"

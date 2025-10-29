@@ -3,31 +3,24 @@
 import React, {useEffect, useRef} from 'react';
 import {Text} from '@radix-ui/themes';
 import {
-    Control,
     Controller,
-    FieldErrors,
     FieldValues,
     Path,
-    UseFormSetValue,
+    useFormContext,
 } from 'react-hook-form';
 
 interface VideoUploadProps<TFieldValues extends FieldValues> {
-    control: Control<TFieldValues>;
-    errors: FieldErrors<TFieldValues>;
-    setValue: UseFormSetValue<TFieldValues>;
     colorMode: 'light' | 'dark';
     name: Path<TFieldValues>;
     previewName: Path<TFieldValues>;
 }
 
 function VideoUpload<TFieldValues extends FieldValues>({
-                                                           control,
-                                                           errors,
-                                                           setValue,
                                                            colorMode,
                                                            name,
                                                            previewName,
                                                        }: VideoUploadProps<TFieldValues>) {
+    const { control, setValue, formState: { errors } } = useFormContext<TFieldValues>()
 
 
     const lastUrlRef = useRef<string | null>(null)

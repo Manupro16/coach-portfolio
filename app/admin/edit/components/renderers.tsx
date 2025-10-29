@@ -1,11 +1,11 @@
 'use client'
 import type {FieldConfig} from './EditForm'
 import {
-    UseFormRegister,
-    Control,
-    UseFormSetValue,
-    FieldErrors, FieldValues,
-    Path, useWatch, Controller
+    FieldValues,
+    Path,
+    useWatch,
+    Controller,
+    useFormContext,
 } from 'react-hook-form'
 
 import TextField from './TextField'
@@ -18,16 +18,13 @@ import ImageArray from './imageArray'
 
 export type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
-    register: UseFormRegister<T>
-    control: Control<T, any, any>
-    setValue: UseFormSetValue<T>
-    errors: FieldErrors<T>
     colorMode: 'light' | 'dark'
 }
 
 // 1) Text fields…
 export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {field, errors, colorMode, control} = props
+    const { field, colorMode } = props
+    const { control, formState: { errors } } = useFormContext<T>()
     return (
         <Controller
             control={control}
@@ -39,7 +36,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
                     label={field.label}
                     fieldType="text"
                     placeHolder=""
-                    errors={errors}
+                    errors={errors as any}
                     colorMode={colorMode}
                     errorKey={field.name as string}
                     {...controllerField}
@@ -52,8 +49,8 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
 
 // 2) Markdown…
 export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>) {
-
-    const {control, field, colorMode, errors} = props
+    const { field, colorMode } = props
+    const { control, formState: { errors } } = useFormContext<T>()
 
     return (
         <Controller<T, Path<T>>
@@ -66,7 +63,7 @@ export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>)
                     onChange={controllerField.onChange}
                     colorMode={colorMode}
                     label={field.label}
-                    errors={errors}
+                    errors={errors as any}
                     errorKey={field.name as string}
                 />
             )}
@@ -77,7 +74,8 @@ export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>)
 
 // 3) Image upload…
 export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {control, setValue, errors, colorMode, field} = props
+    const { field, colorMode } = props
+    const { control, formState: { errors } } = useFormContext<T>()
 
     // watch the preview URL (stored in imageSrc)
     const imagePreviewUrl = useWatch({
@@ -85,11 +83,11 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
         name: 'imageSrc' as Path<T>,  // must match your previewName
     }) as string | undefined
 
-    const rawError = errors[field.name]?.message
+    const rawError = (errors as any)?.[field.name as any]?.message
     const imageError =
         typeof rawError === 'string'
             ? rawError
-            : rawError instanceof Array
+            : Array.isArray(rawError)
                 ? rawError.join(', ')
                 : rawError
                     ? String(rawError)
@@ -101,9 +99,6 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
             <ImageUpload
                 name={field.name as Path<T>}
                 previewName={'imageSrc' as Path<T>}
-                control={control}
-                setValue={setValue}
-                errors={errors}
                 colorMode={colorMode}
             />
             <ImagePreview
@@ -117,14 +112,15 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
 
 
 export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
-    const {control, setValue, errors, colorMode, field} = props;
+    const { field, colorMode } = props;
+    const { control, formState: { errors } } = useFormContext<T>()
 
     const videoPreviewUrl = useWatch({
         control,
         name: 'videoSrc' as Path<T>,
     }) as string | undefined;
 
-    const rawError = errors[field.name]?.message;
+    const rawError = (errors as any)?.[field.name as any]?.message;
     const videoError = typeof rawError === 'string' ? rawError : rawError ? String(rawError) : null;
 
     return (
@@ -132,9 +128,6 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
             <VideoUpload
                 name={"videoFile" as Path<T>}
                 previewName={'videoSrc' as Path<T>}
-                control={control}
-                setValue={setValue}
-                errors={errors}
                 colorMode={colorMode}
             />
             <VideoPreview
@@ -160,7 +153,8 @@ function toInputValue(value: unknown): string {
 }
 
 
-export function DateRenderer<T extends FieldValues>({ field, control, errors, colorMode }: RendererProps<T>) {
+export function DateRenderer<T extends FieldValues>({ field, colorMode }: RendererProps<T>) {
+    const { control, formState: { errors } } = useFormContext<T>()
     return (
         <Controller<T, Path<T>>
             control={control}
@@ -175,7 +169,7 @@ export function DateRenderer<T extends FieldValues>({ field, control, errors, co
                         label={field.label}
                         fieldType="date"
                         placeHolder=""
-                        errors={errors}
+                        errors={errors as any}
                         colorMode={colorMode}
                         value={toInputValue(controllerField.value)}
                     />
@@ -186,13 +180,10 @@ export function DateRenderer<T extends FieldValues>({ field, control, errors, co
 }
 
 
-export function ImageArrayRenderer<T extends FieldValues>({ field, control, setValue, errors, colorMode }: RendererProps<T>) {
+export function ImageArrayRenderer<T extends FieldValues>({ field, colorMode }: RendererProps<T>) {
   return (
     <ImageArray<T>
       name={field.name as Path<T>}
-      control={control}
-      setValue={setValue}
-      errors={errors}
       colorMode={colorMode}
       label={field.label}
       count={field.count ?? 3}

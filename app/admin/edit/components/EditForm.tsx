@@ -4,12 +4,9 @@ import React from 'react'
 import {Box, Flex, Heading} from '@radix-ui/themes'
 import {
     useForm,
-    type UseFormRegister,
-    type Control,
-    type UseFormSetValue,
-    type FieldErrors,
     type DefaultValues,
     Path,
+    FormProvider,
 } from 'react-hook-form'
 import type {Resolver} from 'react-hook-form'
 import clsx from "clsx";
@@ -33,10 +30,6 @@ interface EditFormProps<TFieldValues extends Record<string, unknown>, TOutput = 
         FieldKind,
         React.FC<{
             field: FieldConfig<TFieldValues>
-            register: UseFormRegister<TFieldValues>
-            control: Control<TFieldValues, any, TOutput>
-            setValue: UseFormSetValue<TFieldValues>
-            errors: FieldErrors<TFieldValues>
             colorMode: 'light' | 'dark'
         }>
     >
@@ -47,26 +40,22 @@ interface EditFormProps<TFieldValues extends Record<string, unknown>, TOutput = 
 }
 
 export default function EditForm<TFieldValues extends Record<string, unknown>, TOutput = TFieldValues>({
-                                                                                                           fields,
-                                                                                                           resolver,
-                                                                                                           componentMap,
-                                                                                                           initialData,
-                                                                                                           onSubmit,
-                                                                                                           title = 'Edit Entry'
-                                                                                                       }: EditFormProps<TFieldValues, TOutput>) {
+                                                                                                          fields,
+                                                                                                          resolver,
+                                                                                                          componentMap,
+                                                                                                          initialData,
+                                                                                                          onSubmit,
+                                                                                                          title = 'Edit Entry'
+                                                                                                      }: EditFormProps<TFieldValues, TOutput>) {
     const [colorMode] = React.useState<'light' | 'dark'>('dark')
-    const {
-        register,
-        handleSubmit,
-        control,
-        setValue,
-        formState: {errors, isSubmitting, isValid},
-    } = useForm<TFieldValues, any, TOutput>({
+    const methods = useForm<TFieldValues, any, TOutput>({
         defaultValues: initialData,
         resolver: resolver,
         mode: 'onChange',
         reValidateMode: 'onChange'
     })
+
+    const { handleSubmit, formState: { isSubmitting, isValid } } = methods
 
     return (
         <Flex justify="center" align="center" className="relative z-10 px-4 py-12 sm:px-6 lg:px-8">
@@ -76,35 +65,33 @@ export default function EditForm<TFieldValues extends Record<string, unknown>, T
                     {title}
                 </Heading>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    {fields.map((field, idx) => {
-                        const Component = componentMap[field.kind]
-                        return (
-                            <Component
-                                key={`${String(field.name)}-${idx}`}
-                                field={field}
-                                register={register}
-                                control={control}
-                                setValue={setValue}
-                                errors={errors}
-                                colorMode={colorMode}
-                            />
-                        )
-                    })}
+                <FormProvider {...methods}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {fields.map((field, idx) => {
+                            const Component = componentMap[field.kind]
+                            return (
+                                <Component
+                                    key={`${String(field.name)}-${idx}`}
+                                    field={field}
+                                    colorMode={colorMode}
+                                />
+                            )
+                        })}
 
-                    <button
-                        type="submit"
-                        disabled={isSubmitting || !isValid}
-                        className={clsx(
-                            'mt-6 px-4 py-2 rounded text-white',
-                            (isSubmitting || !isValid)
-                                ? 'bg-gray-500 cursor-not-allowed'
-                                : 'bg-primary hover:bg-primary/90',
-                        )}
-                    >
-                        {isSubmitting ? 'Saving…' : 'Save'}
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting || !isValid}
+                            className={clsx(
+                                'mt-6 px-4 py-2 rounded text-white',
+                                (isSubmitting || !isValid)
+                                    ? 'bg-gray-500 cursor-not-allowed'
+                                    : 'bg-primary hover:bg-primary/90',
+                            )}
+                        >
+                            {isSubmitting ? 'Saving…' : 'Save'}
+                        </button>
+                    </form>
+                </FormProvider>
             </Box>
         </Flex>
 

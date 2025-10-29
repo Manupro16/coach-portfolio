@@ -2,13 +2,10 @@
 
 import React, {useEffect, useRef} from 'react';
 import {Text} from '@radix-ui/themes';
-import {Control, Controller, FieldErrors, FieldValues, Path, UseFormSetValue} from 'react-hook-form';
+import {Controller, FieldValues, Path, useFormContext} from 'react-hook-form';
 
 
 interface ImageUploadProps<TFieldValues extends FieldValues> {
-    control: Control<TFieldValues>;
-    errors: FieldErrors<TFieldValues>;
-    setValue: UseFormSetValue<TFieldValues>;
     colorMode: 'light' | 'dark';
     name: Path<TFieldValues>;
     previewName:  Path<TFieldValues>;
@@ -16,13 +13,11 @@ interface ImageUploadProps<TFieldValues extends FieldValues> {
 
 
 function ImageUpload<TFieldValues extends FieldValues>({
-                                                           control,
-                                                           errors,
-                                                           setValue,
                                                            colorMode,
                                                            name,
                                                            previewName
                                                        }: ImageUploadProps<TFieldValues>) {
+    const { control, setValue, formState: { errors } } = useFormContext<TFieldValues>()
 
 
 

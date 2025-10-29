@@ -5,11 +5,9 @@ import {
   Controller,
   useFieldArray,
   useWatch,
-  type Control,
-  type FieldErrors,
   type FieldValues,
   type Path,
-  type UseFormSetValue,
+  useFormContext,
 } from 'react-hook-form'
 import { Box, Heading } from '@radix-ui/themes'
 import TextField from './TextField'
@@ -18,9 +16,6 @@ import ImageUpload from './imageUpload'
 
 export interface ImageArrayProps<T extends FieldValues> {
   name: Path<T>            // path to the images array (e.g. 'images')
-  control: Control<T, any, any>
-  setValue: UseFormSetValue<T>
-  errors: FieldErrors<T>
   colorMode: 'light' | 'dark'
   label?: string
   count?: number // how many image slots to render
@@ -30,12 +25,10 @@ export interface ImageArrayProps<T extends FieldValues> {
 function ImageSlot<T extends FieldValues>(props: {
   index: number
   name: Path<T>
-  control: Control<T, any, any>
-  setValue: UseFormSetValue<T>
-  errors: FieldErrors<T>
   colorMode: 'light' | 'dark'
 }) {
-  const { index, name, control, setValue, errors, colorMode } = props
+  const { index, name, colorMode } = props
+  const { control, setValue, formState: { errors } } = useFormContext<T>()
 
   // watch the src for preview
   const previewUrl = useWatch({ control, name: `${String(name)}.${index}.src` as Path<T> }) as string | undefined
@@ -71,9 +64,6 @@ function ImageSlot<T extends FieldValues>(props: {
       <ImageUpload
         name={`${String(name)}.${index}.file` as Path<T>}
         previewName={`${String(name)}.${index}.src` as Path<T>}
-        control={control}
-        setValue={setValue}
-        errors={errors}
         colorMode={colorMode}
       />
 
@@ -88,7 +78,7 @@ function ImageSlot<T extends FieldValues>(props: {
             label="Image URL or /path"
             fieldType="text"
             placeHolder="https://… or /pic/file.jpg"
-            errors={errors}
+            errors={errors as any}
             colorMode={colorMode}
             errorKey={`${String(name)}.${index}.src`}
             {...field}
@@ -107,7 +97,7 @@ function ImageSlot<T extends FieldValues>(props: {
             label="Alt text"
             fieldType="text"
             placeHolder="Describe the image"
-            errors={errors}
+            errors={errors as any}
             colorMode={colorMode}
             errorKey={`${String(name)}.${index}.alt`}
             {...field}
@@ -121,7 +111,8 @@ function ImageSlot<T extends FieldValues>(props: {
   )
 }
 
-function ImageArray<T extends FieldValues>({ name, control, setValue, errors, colorMode, label, count = 3 }: ImageArrayProps<T>) {
+function ImageArray<T extends FieldValues>({ name, colorMode, label, count = 3 }: ImageArrayProps<T>) {
+  const { control } = useFormContext<T>()
   // FieldArray to manipulate the images array
   const { fields, replace } = useFieldArray({
     control: control as any,
@@ -150,9 +141,6 @@ function ImageArray<T extends FieldValues>({ name, control, setValue, errors, co
           key={`image-slot-${i}`}
           index={i}
           name={name}
-          control={control}
-          setValue={setValue}
-          errors={errors}
           colorMode={colorMode}
         />
       ))}

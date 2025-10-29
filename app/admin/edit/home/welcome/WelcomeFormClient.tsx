@@ -4,11 +4,11 @@ import EditForm, {type FieldConfig, type FieldKind} from "@/app/admin/edit/compo
 import { TextFieldRenderer, MarkdownRenderer, ImageRenderer, type RendererProps } from '@/app/admin/edit/components/renderers'
 import React from "react";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { welcomeSchema, zodWelcomeInput } from './schema'
+import { welcomeSchema } from './schema'
+import { z } from 'zod'
 
 
-
-const welcomeFields: FieldConfig<zodWelcomeInput>[] = [
+const welcomeFields: FieldConfig<z.input<typeof welcomeSchema>>[] = [
     {kind: 'text', name: 'title', label: 'Main Title'},
     {kind: 'text', name: 'subtitle', label: 'Subtitle'},
     {kind: 'text', name: 'contentTitle', label: 'Section Heading'},
@@ -17,7 +17,7 @@ const welcomeFields: FieldConfig<zodWelcomeInput>[] = [
     {kind: 'image', name: 'imageFile', label: 'Hero Image'},
 ]
 
-type ShowcaseRenderer = React.FC<RendererProps<zodWelcomeInput>>
+type ShowcaseRenderer = React.FC<RendererProps<z.input<typeof welcomeSchema>>>
 
 const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     text: TextFieldRenderer,
@@ -25,18 +25,19 @@ const COMPONENT_MAP: Record<FieldKind, ShowcaseRenderer> = {
     image: ImageRenderer,
     video: () => null,
     date: () => null,
+    imageArray: () => null,
 }
 
 
 interface Props {
-    initialData: zodWelcomeInput
-    onSubmitAction: (values: zodWelcomeInput) => Promise<void>
+    initialData: z.input<typeof welcomeSchema>
+    onSubmitAction: (values: z.output<typeof welcomeSchema>) => Promise<void>
 }
 
 
 function WelcomeFormClient({initialData, onSubmitAction}: Props) {
     return (
-            <EditForm<zodWelcomeInput>
+            <EditForm<z.input<typeof welcomeSchema>, z.output<typeof welcomeSchema>>
             fields={welcomeFields}
             componentMap={COMPONENT_MAP}
             initialData={initialData}

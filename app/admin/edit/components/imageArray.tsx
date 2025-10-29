@@ -28,7 +28,7 @@ function ImageSlot<T extends FieldValues>(props: {
   colorMode: 'light' | 'dark'
 }) {
   const { index, name, colorMode } = props
-  const { control, setValue, formState: { errors } } = useFormContext<T>()
+  const { control, formState: { errors } } = useFormContext<T>()
 
   // watch the src for preview
   const previewUrl = useWatch({ control, name: `${String(name)}.${index}.src` as Path<T> }) as string | undefined

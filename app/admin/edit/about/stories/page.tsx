@@ -34,17 +34,38 @@ export async function onSubmitAction(raw: StoryOutput) {
 }
 
 interface PageProps {
-  searchParams: Promise<{ slug?: string | string[] }>
+  searchParams: Promise<{ id?: string | string[]; slug?: string | string[] }>
 }
 
 export default async function EditAboutStories({ searchParams }: PageProps) {
   const sp = await searchParams
+  const idParam = sp?.id
   const slugParam = sp?.slug
+  const id = Array.isArray(idParam) ? idParam[0] : idParam
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam
 
   let initialData: StoryInput
 
-  if (slug) {
+  if (id) {
+    const numericId = Number(id)
+    const story = Number.isFinite(numericId)
+      ? await prisma.aboutStory.findUnique({ where: { id: numericId } })
+      : null
+    if (story) {
+      initialData = {
+        slug: story.slug,
+        title: story.title,
+        subtitle: story.subtitle ?? '',
+        body: story.body,
+        order: story.order,
+      }
+    } else {
+      // invalid id → fall back to new story defaults
+      const agg = await prisma.aboutStory.aggregate({ _max: { order: true } })
+      const nextOrder = (agg._max.order ?? -1) + 1
+      initialData = { slug: '', title: '', subtitle: '', body: '', order: nextOrder }
+    }
+  } else if (slug) {
     const story = await prisma.aboutStory.findUnique({ where: { slug } })
     if (story) {
       initialData = {
@@ -56,25 +77,13 @@ export default async function EditAboutStories({ searchParams }: PageProps) {
       }
     } else {
       // Pre-fill with provided slug if creating new
-      initialData = {
-        slug,
-        title: '',
-        subtitle: '',
-        body: '',
-        order: 0,
-      }
+      initialData = { slug, title: '', subtitle: '', body: '', order: 0 }
     }
   } else {
     // New story defaults
     const agg = await prisma.aboutStory.aggregate({ _max: { order: true } })
     const nextOrder = (agg._max.order ?? -1) + 1
-    initialData = {
-      slug: '',
-      title: '',
-      subtitle: '',
-      body: '',
-      order: nextOrder,
-    }
+    initialData = { slug: '', title: '', subtitle: '', body: '', order: nextOrder }
   }
 
   return <StoriesFormClient initialData={initialData} onSubmitAction={onSubmitAction} />

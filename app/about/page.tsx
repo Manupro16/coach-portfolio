@@ -4,7 +4,7 @@ import StoryStructure from "@/app/about/components/storyStructure";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import {Role} from "@prisma/client";
-import {FaPencilAlt} from "react-icons/fa";
+import {FaPencilAlt, FaPlus} from "react-icons/fa";
 import {prisma} from "@/lib/prisma"
 
 
@@ -105,6 +105,15 @@ export default async function AboutSection() {
 
                 </Grid>
 
+                {isAdmin && (
+                    <Flex align="center" justify="center" className="my-4">
+                        <Link href="/admin/edit/about/stories" className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary">
+                            <FaPlus className="w-4 h-4" />
+                            <span>Add new story</span>
+                        </Link>
+                    </Flex>
+                )}
+
                 {hasStories
                     ? stories.map((s) => (
                         <StoryStructure
@@ -115,8 +124,7 @@ export default async function AboutSection() {
                             maxWidthClass={maxWidth}
                             textProps={textSizes}
                             isAdmin={isAdmin}
-                            // Ensure this path matches your actual admin route
-                            editHref={`/admin/edit/about/stories?slug=${encodeURIComponent(s.slug)}`}
+                            editHref={`/admin/edit/about/stories?id=${encodeURIComponent(String(s.id))}`}
                         />
                     ))
                     : defaultStories.map((s, i) => (

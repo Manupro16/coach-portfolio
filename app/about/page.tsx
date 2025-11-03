@@ -4,7 +4,7 @@ import StoryStructure from "@/app/about/components/storyStructure";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/lib/auth";
 import {Role} from "@prisma/client";
-import {FaPencilAlt, FaPlus} from "react-icons/fa";
+import {FaPencilAlt} from "react-icons/fa";
 import {prisma} from "@/lib/prisma"
 
 

@@ -8,14 +8,14 @@ import {
     Path,
     FormProvider,
 } from 'react-hook-form'
-import type {Resolver} from 'react-hook-form'
+import type {Resolver, FieldValues} from 'react-hook-form'
 import clsx from "clsx";
 
 
 // Shared types:
 export type FieldKind = 'text' | 'markdown' | 'image' | 'video' | 'date' | 'imageArray'
 
-export interface FieldConfig<T> {
+export interface FieldConfig<T extends FieldValues> {
     kind: FieldKind
     name: Path<T>
     label: string
@@ -24,7 +24,7 @@ export interface FieldConfig<T> {
 }
 
 // Props for your generic form:
-interface EditFormProps<TFieldValues extends Record<string, unknown>, TOutput = TFieldValues> {
+interface EditFormProps<TFieldValues extends FieldValues, TOutput = TFieldValues, TContext = unknown> {
     fields: FieldConfig<TFieldValues>[]
     componentMap: Record<
         FieldKind,
@@ -36,19 +36,19 @@ interface EditFormProps<TFieldValues extends Record<string, unknown>, TOutput = 
     initialData: DefaultValues<TFieldValues>
     onSubmit: (values: TOutput) => Promise<void>
     title?: string
-    resolver?: Resolver<TFieldValues, any, TOutput>
+    resolver?: Resolver<TFieldValues, TContext, TOutput>
 }
 
-export default function EditForm<TFieldValues extends Record<string, unknown>, TOutput = TFieldValues>({
-                                                                                                          fields,
-                                                                                                          resolver,
-                                                                                                          componentMap,
-                                                                                                          initialData,
-                                                                                                          onSubmit,
-                                                                                                          title = 'Edit Entry'
-                                                                                                      }: EditFormProps<TFieldValues, TOutput>) {
+export default function EditForm<TFieldValues extends FieldValues, TOutput = TFieldValues, TContext = unknown>({
+                                                                                                                 fields,
+                                                                                                                 resolver,
+                                                                                                                 componentMap,
+                                                                                                                 initialData,
+                                                                                                                 onSubmit,
+                                                                                                                 title = 'Edit Entry'
+                                                                                                             }: EditFormProps<TFieldValues, TOutput, TContext>) {
     const [colorMode] = React.useState<'light' | 'dark'>('dark')
-    const methods = useForm<TFieldValues, any, TOutput>({
+    const methods = useForm<TFieldValues, TContext, TOutput>({
         defaultValues: initialData,
         resolver: resolver,
         mode: 'onChange',

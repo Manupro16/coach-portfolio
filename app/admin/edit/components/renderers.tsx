@@ -7,6 +7,7 @@ import {
     useWatch,
     Controller,
     useFormContext,
+    type FieldErrors,
 } from 'react-hook-form'
 
 import TextField from './TextField'
@@ -16,6 +17,18 @@ import ImagePreview from "@/app/admin/edit/components/imagePreview";
 import VideoUpload from "@/app/admin/edit/components/VideoUpload";
 import VideoPreview from "@/app/admin/edit/components/VideoPreview";
 import ImageArray from './imageArray'
+
+function getErrorMessage(errors: FieldErrors | undefined, path: string): string | null {
+    if (!errors) return null
+    const segs = path.split('.')
+    let cur: unknown = errors
+    for (const s of segs) {
+        if (cur == null || typeof cur !== 'object') return null
+        cur = (cur as Record<string, unknown>)[s]
+    }
+    const msg = (cur as { message?: unknown } | undefined)?.message
+    return typeof msg === 'string' ? msg : msg ? String(msg) : null
+}
 
 export type RendererProps<T extends FieldValues> = {
     field: FieldConfig<T>
@@ -37,7 +50,7 @@ export function TextFieldRenderer<T extends FieldValues>(props: RendererProps<T>
                     label={field.label}
                     fieldType="text"
                     placeHolder=""
-                    errors={errors as any}
+                    errors={errors as FieldErrors}
                     colorMode={colorMode}
                     errorKey={field.name as string}
                     {...controllerField}
@@ -64,7 +77,7 @@ export function MarkdownRenderer<T extends FieldValues>(props: RendererProps<T>)
                     onChange={controllerField.onChange}
                     colorMode={colorMode}
                     label={field.label}
-                    errors={errors as any}
+                    errors={errors as FieldErrors}
                     errorKey={field.name as string}
                 />
             )}
@@ -84,15 +97,7 @@ export function ImageRenderer<T extends FieldValues>(props: RendererProps<T>) {
         name: 'imageSrc' as Path<T>,  // must match your previewName
     }) as string | undefined
 
-    const rawError = (errors as any)?.[field.name as any]?.message
-    const imageError =
-        typeof rawError === 'string'
-            ? rawError
-            : Array.isArray(rawError)
-                ? rawError.join(', ')
-                : rawError
-                    ? String(rawError)
-                    : null
+    const imageError = getErrorMessage(errors, String(field.name))
 
 
     return (
@@ -121,8 +126,7 @@ export function VideoRenderer<T extends FieldValues>(props: RendererProps<T>) {
         name: 'videoSrc' as Path<T>,
     }) as string | undefined;
 
-    const rawError = (errors as any)?.[field.name as any]?.message;
-    const videoError = typeof rawError === 'string' ? rawError : rawError ? String(rawError) : null;
+    const videoError = getErrorMessage(errors, String(field.name));
 
     return (
         <>
@@ -170,7 +174,7 @@ export function DateRenderer<T extends FieldValues>({ field, colorMode }: Render
                         label={field.label}
                         fieldType="date"
                         placeHolder=""
-                        errors={errors as any}
+                        errors={errors as FieldErrors}
                         colorMode={colorMode}
                         value={toInputValue(controllerField.value)}
                     />

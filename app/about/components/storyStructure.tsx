@@ -14,7 +14,7 @@ interface StoryStructureProps {
     accentColorClass?: string
     animate?: boolean
     maxWidthClass?: string
-    headingAs?: React.ElementType
+    headingAs?: Parameters<typeof Heading>[0]['as']
     className?: string
     headingProps?: React.ComponentProps<typeof Heading>
     subtitleProps?: React.ComponentProps<typeof Text>
@@ -84,7 +84,7 @@ export default function StoryStructure({
         >
             <Flex as="div" direction="row" align="center" gap="4" justify="center">
                 <Heading
-                    as={headingAs as any}
+                    as={headingAs}
                     size={sizeToHeading[size]}
                     className="mb-1 text-primary-foreground"
                     {...headingProps}

@@ -15,12 +15,15 @@ export async function onSubmitAction(raw: HeroOutput) {
     const processed = [] as { order: number; src: string; alt: string }[]
 
     for (let i = 0; i < data.images.length; i++) {
-        const img: any = data.images[i] as any
+        const img = data.images[i]
         const order = typeof img.order === 'number' ? img.order : i
         let src: string = (img.src ?? '').trim()
         const alt: string = (img.alt ?? '').trim()
 
-        const files = Array.isArray(img.file) ? img.file as File[] : []
+        const maybeFiles: unknown = (img as { file?: unknown }).file
+        const files: File[] = Array.isArray(maybeFiles)
+            ? (maybeFiles as unknown[]).filter((f): f is File => typeof File !== 'undefined' && f instanceof File)
+            : []
         const file = files[0]
 
         if (file) {
@@ -110,7 +113,7 @@ async function EditHeroSection() {
 
     // Normalize images to exactly 3 slots (order 0..2) to match the editor count
     const rawImages = (record?.images ?? []).sort((a, b) => a.order - b.order)
-    const images = Array.from({ length: 3 }, (_, i) => rawImages.find(x => x.order === i) ?? { id: undefined as any, order: i, src: '', alt: '' })
+    const images = Array.from({ length: 3 }, (_, i) => rawImages.find(x => x.order === i) ?? { order: i, src: '', alt: '' })
 
     const initialData: HeroInput = {
         fullName: record?.fullName ?? '',

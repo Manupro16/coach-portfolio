@@ -3,6 +3,7 @@ import type {FieldConfig} from './EditForm'
 import {
     FieldValues,
     Path,
+    FieldArrayPath,
     useWatch,
     Controller,
     useFormContext,
@@ -182,8 +183,8 @@ export function DateRenderer<T extends FieldValues>({ field, colorMode }: Render
 
 export function ImageArrayRenderer<T extends FieldValues>({ field, colorMode }: RendererProps<T>) {
   return (
-    <ImageArray<T>
-      name={field.name as Path<T>}
+    <ImageArray<T, FieldArrayPath<T>>
+      name={field.name as FieldArrayPath<T>}
       colorMode={colorMode}
       label={field.label}
       count={field.count ?? 3}

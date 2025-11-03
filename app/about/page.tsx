@@ -107,9 +107,8 @@ export default async function AboutSection() {
 
                 {isAdmin && (
                     <Flex align="center" justify="center" className="my-4">
-                        <Link href="/admin/edit/about/stories" className="inline-flex items-center gap-2 text-primary-foreground hover:text-primary">
-                            <FaPlus className="w-4 h-4" />
-                            <span>Add new story</span>
+                        <Link href="/admin/edit/about/stories" className="text-primary-foreground hover:text-primary">
+                            <span>Add new story </span>
                         </Link>
                     </Flex>
                 )}
